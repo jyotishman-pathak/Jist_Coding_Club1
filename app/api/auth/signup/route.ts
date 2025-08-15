@@ -48,7 +48,7 @@ export async function POST(req: Request) {
 
     // Validate Department
     const validDepartments = Object.values(Department);
-    console.log("Valid departments:", validDepartments); // Debug log
+    console.log("Valid departments in production:", validDepartments); // Debug log
     if (!validDepartments.includes(Department)) {
       return NextResponse.json(
         { error: `Invalid department value. Must be one of: ${validDepartments.join(", ")}.` },
@@ -103,7 +103,7 @@ export async function POST(req: Request) {
     console.error("Signup Error:", {
       message: error instanceof Error ? error.message : String(error),
       stack: error instanceof Error ? error.stack : undefined,
-     
+      
     });
     return NextResponse.json(
       {
