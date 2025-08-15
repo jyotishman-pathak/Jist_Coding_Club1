@@ -1,0 +1,133 @@
+'use client';
+
+import { cn } from "@/lib/utils";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Calendar, Clock, MapPin, Users } from 'lucide-react';
+
+export default function EventsSection() {
+  const upcomingEvents = [
+    {
+      title: "Intro to VsCode and Web Development",
+      date: "3 Sep, 2025",
+      time: "2:00 PM - 3:00 PM",
+      location: "Jist Campus",
+      attendees: 45,
+      category: "Workshop",
+      description: "Learn the basics of Visual Studio Code and how to set up your first web development project. Perfect for beginners!",
+      status: "Open Registration"
+    },
+    {
+      title: "Backend Development with Node.js & Express",
+      date: "5 Sep, 2025",
+      time: "4:00 PM - 6:30 PM",
+      location: "Jist Campus",
+      attendees: 55,
+      category: "Workshop",
+      description: "Learn how to create APIs, connect to databases, and build scalable backend services using Node.js and Express. Ideal for aspiring full-stack developers.",
+      status: "Open Registration"
+    },
+    {
+      title: "Problem Solving & Building Scalable Apps with Next.js",
+      date: "8 Sep, 2025",
+      time: "3:00 PM - 6:00 PM",
+      location: "Jist Campus",
+      attendees: 70,
+      category: "Workshop",
+      description: "Sharpen your DSA skills with live coding challenges, then dive into creating fast, SEO-friendly web apps using Next.js. A blend of problem-solving and modern web development.",
+      status: "Early Bird"
+    }
+  ];
+
+  return (
+    <section id="events" className="relative flex w-full items-center justify-center py-20">
+      {/* Grid Background */}
+      <div
+        className={cn(
+          "absolute inset-0",
+          "[background-size:40px_40px]",
+          "[background-image:linear-gradient(to_right,#e4e4e7_1px,transparent_1px),linear-gradient(to_bottom,#e4e4e7_1px,transparent_1px)]",
+          "dark:[background-image:linear-gradient(to_right,#262626_1px,transparent_1px),linear-gradient(to_bottom,#262626_1px,transparent_1px)]"
+        )}
+      />
+      {/* Radial fade overlay */}
+      <div className="pointer-events-none absolute inset-0 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
+
+      {/* Foreground Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+        {/* Section Heading */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            Events & Activities
+          </h2>
+          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            Join our exciting events, workshops, and hackathons designed to enhance your skills and expand your network.
+          </p>
+        </div>
+
+        {/* Upcoming Events */}
+        <div>
+          <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">Upcoming Events</h3>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {upcomingEvents.map((event, index) => (
+              <Card
+                key={index}
+                className="group hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden"
+              >
+                <CardHeader className="pb-3">
+                  <div className="flex justify-between items-start mb-2">
+                    <Badge
+                      variant="secondary"
+                      className="bg-gradient-to-r from-purple-600 to-blue-600 text-white"
+                    >
+                      {event.category}
+                    </Badge>
+                    <Badge
+                      variant="outline"
+                      className="text-green-600 border-green-600"
+                    >
+                      {event.status}
+                    </Badge>
+                  </div>
+                  <CardTitle className="text-xl font-semibold group-hover:text-purple-600 transition-colors">
+                    {event.title}
+                  </CardTitle>
+                </CardHeader>
+
+                <CardContent className="space-y-4">
+                  <p className="text-gray-600 dark:text-gray-300 text-sm">{event.description}</p>
+
+                  {/* Event Details */}
+                  <div className="space-y-2 text-sm">
+                    <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                      <Calendar className="h-4 w-4" />
+                      <span>{event.date}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                      <Clock className="h-4 w-4" />
+                      <span>{event.time}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                      <MapPin className="h-4 w-4" />
+                      <span>{event.location}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                      <Users className="h-4 w-4" />
+                      <span>{event.attendees} registered</span>
+                    </div>
+                  </div>
+
+                  {/* Register Button */}
+                  <Button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700">
+                    Register Now
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
