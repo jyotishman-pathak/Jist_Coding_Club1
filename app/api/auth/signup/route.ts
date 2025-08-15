@@ -72,7 +72,10 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("Signup Error:", error);
     return NextResponse.json(
-      { error: "Something went wrong during signup." },
+      { 
+        error: "Something went wrong during signup.",
+        details: error instanceof Error ? error.message : String(error)
+      },
       { status: 500 }
     );
   }
