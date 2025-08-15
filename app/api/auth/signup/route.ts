@@ -23,14 +23,14 @@ export async function POST(req: Request) {
       email,
       password,
       Department,
-      ProgrammingExperience, // frontend field
+      ProgrammingExperience, 
       Interest,
     } = body;
 
-    // Map frontend field to Prisma field
+  
     const ProgramingExperience = ProgrammingExperience;
 
-    // Validation
+    
     if (!name || !email || !password || !Department || ProgramingExperience === undefined) {
       return NextResponse.json(
         { error: "Please fill all required fields." },
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check if user already exists
+   
     const existingUser = await prisma.student.findUnique({
       where: { email },
     });

@@ -1,13 +1,11 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
+
 import { Users, Lightbulb, Trophy, Calendar, ArrowRight } from 'lucide-react';
+
+import { BorderMagicButton } from './helper/MagicButoon';
+import Link from 'next/link';
 
 export default function JoinSection() {
     const benefits = [
@@ -71,86 +69,19 @@ export default function JoinSection() {
                 </div>
 
                 {/* Registration Form */}
-                <div>
-                    <Card className="max-w-2xl mx-auto border-0 shadow-2xl bg-white text-gray-900">
-                        <CardHeader className="text-center pb-6">
-                            <CardTitle className="text-3xl font-bold">Quick Registration</CardTitle>
-                            <p className="text-gray-600">Join our community in less than 2 minutes</p>
-                        </CardHeader>
-                        <CardContent className="space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                    <Label htmlFor="firstName">First Name</Label>
-                                    <Input id="firstName" placeholder="Enter your first name" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="lastName">Last Name</Label>
-                                    <Input id="lastName" placeholder="Enter your last name" />
-                                </div>
-                            </div>
+                <div className='flex justify-center mb-12'>
+              <Link href="/auth/signup">
+               <button 
+                      
+                      className="relative inline-flex h-14 w-52 overflow-hidden rounded-full p-[2px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+  <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)] blur-md" />
+  <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-5 text-lg font-semibold text-white backdrop-blur-3xl">
+    Join Now
+  </span>
+</button>
+              </Link>
+                     
 
-                            <div className="space-y-2">
-                                <Label htmlFor="email">Email Address</Label>
-                                <Input id="email" type="email" placeholder="your.email@university.edu" />
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                    <Label htmlFor="year">Academic Year</Label>
-                                    <Select>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Select your year" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="freshman">Freshman</SelectItem>
-                                            <SelectItem value="sophomore">Sophomore</SelectItem>
-                                            <SelectItem value="junior">Junior</SelectItem>
-                                            <SelectItem value="senior">Senior</SelectItem>
-                                            <SelectItem value="graduate">Graduate Student</SelectItem>
-                                            <SelectItem value="alumni">Alumni</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="major">Major/Field</Label>
-                                    <Input id="major" placeholder="Computer Science" />
-                                </div>
-                            </div>
-
-                            <div className="space-y-2">
-                                <Label htmlFor="experience">Programming Experience</Label>
-                                <Select>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Select your experience level" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="beginner">Beginner (0-1 years)</SelectItem>
-                                        <SelectItem value="intermediate">Intermediate (1-3 years)</SelectItem>
-                                        <SelectItem value="advanced">Advanced (3+ years)</SelectItem>
-                                        <SelectItem value="professional">Professional Developer</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-
-                            <div className="space-y-2">
-                                <Label htmlFor="interests">What interests you most? (Optional)</Label>
-                                <Textarea
-                                    id="interests"
-                                    placeholder="Web development, mobile apps, AI/ML, data science, cybersecurity, etc."
-                                    rows={3}
-                                />
-                            </div>
-
-                            <Button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-lg py-3">
-                                Join Jist Coding Club
-                                <ArrowRight className="ml-2 h-5 w-5" />
-                            </Button>
-
-                            <p className="text-center text-sm text-gray-500">
-                                By joining, you agree to our community guidelines and code of conduct.
-                            </p>
-                        </CardContent>
-                    </Card>
                 </div>
             </div>
         </section>
