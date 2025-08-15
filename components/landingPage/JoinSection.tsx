@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import { Users, Lightbulb, Trophy, Calendar, ArrowRight } from 'lucide-react';
 
-import { BorderMagicButton } from './helper/MagicButoon';
 import Link from 'next/link';
 
 export default function JoinSection() {
