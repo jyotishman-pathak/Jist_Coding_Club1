@@ -3,7 +3,6 @@ import { Department } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 
-
 interface SignupData {
   name: string;
   email: string;
@@ -23,22 +22,17 @@ export async function POST(req: Request) {
       email,
       password,
       Department,
-      ProgrammingExperience, 
+      ProgrammingExperience,
       Interest,
     } = body;
 
-  
-    const ProgramingExperience = ProgrammingExperience;
-
-    
-    if (!name || !email || !password || !Department || ProgramingExperience === undefined) {
+    if (!name || !email || !password || !Department || ProgrammingExperience === undefined) {
       return NextResponse.json(
         { error: "Please fill all required fields." },
         { status: 400 }
       );
     }
 
-   
     const existingUser = await prisma.student.findUnique({
       where: { email },
     });
@@ -58,8 +52,8 @@ export async function POST(req: Request) {
       data: {
         name,
         email,
-        Deptartment: Department, 
-        ProgramingExperience: Number(ProgramingExperience), 
+        Department, 
+        ProgrammingExperience: Number(ProgrammingExperience),
         Interest: Interest || [],
         password: hashedPassword,
       },
@@ -70,13 +64,16 @@ export async function POST(req: Request) {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Signup Error:", error);
-    return NextResponse.json(
-      { 
-        error: "Something went wrong during signup.",
-        details: error instanceof Error ? error.message : String(error)
-      },
-      { status: 500 }
-    );
-  }
+  console.error("Signup Error:", {
+    message: error instanceof Error ? error.message : String(error),
+    stack: error instanceof Error ? error.stack : undefined,
+  });
+  return NextResponse.json(
+    { 
+      error: "Something went wrong during signup.",
+      details: error instanceof Error ? error.message : String(error)
+    },
+    { status: 500 }
+  );
+}
 }
