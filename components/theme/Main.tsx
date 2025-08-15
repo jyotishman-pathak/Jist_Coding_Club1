@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react'
 import { ThemeProvider } from './theme-provider'
 import {NavbarMain} from '../landingPage/Navbar'
+import { Toaster } from 'sonner'
 
 const Main = ({children}:{children: ReactNode}) => {
   return (
@@ -11,7 +12,7 @@ const Main = ({children}:{children: ReactNode}) => {
             enableSystem
             disableTransitionOnChange
           >
-            
+              <Toaster />
   {children}
         </ThemeProvider>
       
