@@ -1,7 +1,8 @@
 import { prisma } from "@/lib/prisma";
+import { Department } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
-import { Department } from "@/src/generated/prisma";
+
 
 interface SignupData {
   name: string;
