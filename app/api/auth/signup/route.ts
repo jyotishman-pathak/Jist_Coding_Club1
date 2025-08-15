@@ -13,9 +13,9 @@ interface SignupData {
 }
 
 export async function POST(req: Request) {
-  let body: SignupData | undefined;
   try {
     // Parse request body
+    let body: SignupData;
     try {
       body = await req.json();
     } catch (error) {
@@ -27,12 +27,6 @@ export async function POST(req: Request) {
     }
     console.log("Received signup data:", JSON.stringify(body, null, 2));
 
-    if (!body) {
-      return NextResponse.json(
-        { error: "Request body is missing." },
-        { status: 400 }
-      );
-    }
     const { name, email, password, Department, ProgrammingExperience, Interest } = body;
 
     // Validate required fields
@@ -54,6 +48,7 @@ export async function POST(req: Request) {
 
     // Validate Department
     const validDepartments = Object.values(Department);
+    console.log("Valid departments:", validDepartments); // Debug log
     if (!validDepartments.includes(Department)) {
       return NextResponse.json(
         { error: `Invalid department value. Must be one of: ${validDepartments.join(", ")}.` },
@@ -70,19 +65,23 @@ export async function POST(req: Request) {
     }
 
     // Check for existing user
-    const existingUser = await prisma.student.findUnique({
-      where: { email },
-    });
-
-    if (existingUser) {
-      return NextResponse.json(
-        { error: "Email already in use." },
-        { status: 400 }
-      );
+    try {
+      const existingUser = await prisma.student.findUnique({
+        where: { email },
+      });
+      if (existingUser) {
+        return NextResponse.json(
+          { error: "Email already in use." },
+          { status: 400 }
+        );
+      }
+    } catch (dbError) {
+      console.error("Database query error:", dbError);
+      throw new Error("Failed to check existing user.");
     }
 
     // Hash password
-    const hashedPassword = await bcrypt.hash(password, 8); // Reduced salt rounds for performance
+    const hashedPassword = await bcrypt.hash(password, 8);
 
     // Create new user
     const newUser = await prisma.student.create({
@@ -104,7 +103,7 @@ export async function POST(req: Request) {
     console.error("Signup Error:", {
       message: error instanceof Error ? error.message : String(error),
       stack: error instanceof Error ? error.stack : undefined,
-      body,
+     
     });
     return NextResponse.json(
       {
