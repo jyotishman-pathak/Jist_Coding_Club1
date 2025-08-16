@@ -10,6 +10,7 @@ import {
   MobileNavToggle,
   MobileNavMenu,
 } from "@/components/ui/react-bits/resizable-navbar";
+import Link from "next/link";
 import { useState } from "react";
 
 export function NavbarMain() {
@@ -34,8 +35,10 @@ export function NavbarMain() {
     <NavbarLogo />
     <NavItems items={navItems} />
     <div className="flex items-center gap-4">
-    
-      <NavbarButton variant="primary">Login</NavbarButton>
+      <Link href="/auth/sign-up">
+      <NavbarButton variant="primary">Join Now</NavbarButton>
+      </Link>
+      
     </div>
   </NavBody>
 
@@ -64,10 +67,13 @@ export function NavbarMain() {
         </a>
       ))}
       <div className="flex w-full flex-col gap-4">
-       
+        <Link href="/auth/sign-up">
+   
+      
         <NavbarButton variant="primary" className="w-full">
-          Login
+          Join Now
         </NavbarButton>
+        </Link>
       </div>
     </MobileNavMenu>
   </MobileNav>
