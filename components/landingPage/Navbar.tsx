@@ -10,10 +10,17 @@ import {
   MobileNavToggle,
   MobileNavMenu,
 } from "@/components/ui/react-bits/resizable-navbar";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 
 export function NavbarMain() {
+
+  const session = useSession();
+
+
+
+
   const navItems = [
   
     { name: "About", link: "#about" },
@@ -35,9 +42,30 @@ export function NavbarMain() {
     <NavbarLogo />
     <NavItems items={navItems} />
     <div className="flex items-center gap-4">
-      <Link href="/auth/sign-up">
-      <NavbarButton variant="primary">Join Now</NavbarButton>
-      </Link>
+  
+    {session.status === "authenticated" ? 
+    
+  <Link href="/dashboard" >
+  <NavbarButton as="button" variant="primary">
+    Dashboard
+  </NavbarButton>
+</Link>
+
+:  
+
+<Link href="/auth/sign-up" >
+  <NavbarButton as="button" variant="primary">
+    Sign Up
+  </NavbarButton>
+</Link>
+
+  
+  }
+  
+  
+  
+ 
+
       
     </div>
   </NavBody>
@@ -67,13 +95,25 @@ export function NavbarMain() {
         </a>
       ))}
       <div className="flex w-full flex-col gap-4">
-        <Link href="/auth/sign-up">
-   
-      
-        <NavbarButton variant="primary" className="w-full">
-          Join Now
-        </NavbarButton>
-        </Link>
+       {session.status === "authenticated" ? 
+    
+  <Link href="/dashboard" >
+  <NavbarButton as="button" variant="primary">
+    Dashboard
+  </NavbarButton>
+</Link>
+
+:  
+
+<Link href="/auth/sign-up" >
+  <NavbarButton as="button" variant="primary">
+    Sign Up
+  </NavbarButton>
+</Link>
+
+  
+  }
+
       </div>
     </MobileNavMenu>
   </MobileNav>

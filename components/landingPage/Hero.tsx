@@ -2,8 +2,11 @@
 import React from "react";
 import Galaxy from "../ui/react-bits/Galaxy";
 import { ContainerTextFlip } from "../ui/container-text-flip";
+import { useSession } from "next-auth/react";
 
 export function Hero() {
+
+  const session = useSession();
   return (
     <div id="home" className="relative w-full rounded-md flex items-center justify-center bg-black/[0.96] antialiased bg-grid-white/[0.02] overflow-hidden
       min-h-screen md:h-[60rem]">
@@ -40,18 +43,37 @@ export function Hero() {
 
         {/* Buttons */}
         <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+              {session.status === "unauthenticated" ? 
+              <>
+
+                
+              <a
+          href="/auth/sign-up"
+          className="px-5 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition text-sm sm:text-base"
+        >
+          Get Started
+        </a>
+
           <a
-            href="#get-started"
-            className="px-5 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition text-sm sm:text-base"
-          >
-            Get Started
-          </a>
-          <a
-            href="#learn-more"
-            className="px-5 py-3 border border-neutral-400 text-neutral-300 rounded-lg font-medium hover:bg-neutral-800 transition text-sm sm:text-base"
-          >
-            Learn More
-          </a>
+  href="#about"
+  className="px-5 py-3 border border-neutral-400 text-neutral-300 rounded-lg font-medium hover:bg-neutral-800 transition text-sm sm:text-base"
+>
+  Learn More
+</a>
+
+
+              </>
+            
+
+:
+
+ <a
+          href="/auth/sign-up"
+          className="px-5 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition text-shadow-md sm:text-base"
+        >
+         View Dashboard
+        </a>
+}
         </div>
       </div>
     </div>
