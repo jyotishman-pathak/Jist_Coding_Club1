@@ -7,25 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Department {
-  PEIE
-  ETC
-  MECH
-  CIVIL
-  MATHS
-  PHYSICS
-  CHEMISTRY
-  IT
-}
-
-model Student {
-  id                 Int        @id @default(autoincrement())
-  name               String
-  email              String     @unique
-  password           String
-  Department         Department
+model User {
+  id                    Int      @id @default(autoincrement())
+  name                  String
+  email                 String   @unique
+  password              String
+  Department            String
   ProgrammingExperience Int
-  Interest           String[]
-  createdAt          DateTime   @default(now())
-  updatedAt          DateTime   @updatedAt
+  Interest              String[]
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 }

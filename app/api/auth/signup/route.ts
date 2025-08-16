@@ -1,7 +1,16 @@
-import { prisma } from "@/lib/prisma";
-import { Department } from "@prisma/client";
+import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
+
+type Department =
+  | "PEIE"
+  | "ETC"
+  | "MECH"
+  | "CIVIL"
+  | "MATHS"
+  | "PHYSICS"
+  | "CHEMISTRY"
+  | "IT";
 
 interface SignupData {
   name: string;
@@ -25,12 +34,24 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    console.log("Received signup data:", JSON.stringify(body, null, 2));
 
-    const { name, email, password, Department, ProgrammingExperience, Interest } = body;
+    const {
+      name,
+      email,
+      password,
+      Department,
+      ProgrammingExperience,
+      Interest,
+    } = body;
 
     // Validate required fields
-    if (!name || !email || !password || !Department || ProgrammingExperience === undefined) {
+    if (
+      !name ||
+      !email ||
+      !password ||
+      !Department ||
+      ProgrammingExperience === undefined
+    ) {
       return NextResponse.json(
         { error: "Please fill all required fields." },
         { status: 400 }
@@ -47,53 +68,103 @@ export async function POST(req: Request) {
     }
 
     // Validate Department
-    const validDepartments = Object.values(Department);
-    console.log("Valid departments in production:", validDepartments); // Debug log
+    const validDepartments: Department[] = [
+      "PEIE",
+      "ETC",
+      "MECH",
+      "CIVIL",
+      "MATHS",
+      "PHYSICS",
+      "CHEMISTRY",
+      "IT",
+    ];
     if (!validDepartments.includes(Department)) {
       return NextResponse.json(
-        { error: `Invalid department value. Must be one of: ${validDepartments.join(", ")}.` },
+        {
+          error: `Invalid department value. Must be one of: ${validDepartments.join(
+            ", "
+          )}.`,
+        },
         { status: 400 }
       );
     }
 
     // Validate ProgrammingExperience
-    if (isNaN(Number(ProgrammingExperience)) || Number(ProgrammingExperience) < 0) {
+    if (
+      isNaN(Number(ProgrammingExperience)) ||
+      Number(ProgrammingExperience) < 0
+    ) {
       return NextResponse.json(
-        { error: "ProgrammingExperience must be a valid non-negative number." },
+        {
+          error:
+            "ProgrammingExperience must be a valid non-negative number.",
+        },
         { status: 400 }
       );
     }
 
-    // Check for existing user
+    // ✅ Check existing user
+    let existingUser;
     try {
-      const existingUser = await prisma.student.findUnique({
+      existingUser = await prisma.user.findUnique({
         where: { email },
       });
-      if (existingUser) {
-        return NextResponse.json(
-          { error: "Email already in use." },
-          { status: 400 }
-        );
-      }
-    } catch (dbError) {
-      console.error("Database query error:", dbError);
-      throw new Error("Failed to check existing user.");
+    } catch (dbError: any) {
+      console.error("🔥 Prisma Error Details:", {
+        code: dbError.code,
+        meta: dbError.meta,
+        message: dbError.message,
+        stack: dbError.stack,
+      });
+      return NextResponse.json(
+        {
+          error: "Database operation failed",
+          details: dbError.message,
+          prismaCode: dbError.code ?? "UNKNOWN",
+        },
+        { status: 500 }
+      );
+    }
+
+    if (existingUser) {
+      return NextResponse.json(
+        { error: "Email already in use." },
+        { status: 400 }
+      );
     }
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 8);
 
     // Create new user
-    const newUser = await prisma.student.create({
-      data: {
-        name,
-        email,
-        Department,
-        ProgrammingExperience: Number(ProgrammingExperience),
-        Interest: Interest || [],
-        password: hashedPassword,
-      },
-    });
+    let newUser;
+    try {
+      newUser = await prisma.user.create({
+        data: {
+          name,
+          email,
+          Department,
+          ProgrammingExperience: Number(ProgrammingExperience),
+          Interest: Interest || [],
+          password: hashedPassword,
+        },
+      });
+    } catch (dbError: any) {
+      console.error("🔥 Prisma Error on Create:", {
+        code: dbError.code,
+        meta: dbError.meta,
+        message: dbError.message,
+        stack: dbError.stack,
+      });
+      return NextResponse.json(
+        {
+          error: "Database operation failed during user creation",
+          details: dbError.message,
+          prismaCode: dbError.code ?? "UNKNOWN",
+        },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json(
       { message: "User registered successfully", user: newUser },
@@ -103,7 +174,6 @@ export async function POST(req: Request) {
     console.error("Signup Error:", {
       message: error instanceof Error ? error.message : String(error),
       stack: error instanceof Error ? error.stack : undefined,
-      
     });
     return NextResponse.json(
       {
