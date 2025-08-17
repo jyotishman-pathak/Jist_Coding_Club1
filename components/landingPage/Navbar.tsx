@@ -13,6 +13,7 @@ import {
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
+import { ModeToggle } from "../theme/Mode";
 
 export function NavbarMain() {
 
@@ -59,10 +60,11 @@ export function NavbarMain() {
   </NavbarButton>
 </Link>
 
+
   
   }
   
-  
+  {/* <ModeToggle/> */}
   
  
 
