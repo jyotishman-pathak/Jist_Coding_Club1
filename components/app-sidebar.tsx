@@ -107,17 +107,17 @@ export const data = {
   ],
   projects: [
     {
-      name: "Bug Factory 🐞",
+      name: "Bug Factory ",
       url: "/dashboard/projects/bug-factory",
       icon: Bug,
     },
     {
-      name: "Code Streak 🔥",
+      name: "Code Streak ",
       url: "/dashboard/streak",
       icon: Flame,
     },
     {
-      name: "Mentor Connect 🤝",
+      name: "Mentor Connect ",
       url: "/dashboard/mentors",
       icon: GraduationCap,
     },
