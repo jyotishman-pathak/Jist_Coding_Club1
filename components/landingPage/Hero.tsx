@@ -53,7 +53,7 @@ export function Hero() {
           className="mt-6 text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl leading-relaxed"
         >
           Learn. Build. Innovate.  
-          From <span className="font-semibold text-foreground">Web Dev</span> 
+          From <span className="font-semibold text-foreground">Web Dev </span> 
           to <span className="font-semibold text-foreground">AI/ML</span>, 
           we push the limits of technology together 🚀
         </motion.p>

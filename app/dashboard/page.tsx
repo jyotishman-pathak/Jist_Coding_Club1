@@ -115,10 +115,10 @@ const resources = [
 ];
 
 const recentActivity = [
-  { who: "Aarav", what: "pushed to mentor-connect", when: "2h ago" },
-  { who: "Sara", what: "opened PR #42 (bugfix)", when: "6h ago" },
-  { who: "Rishi", what: "created repo bug-factory", when: "1d ago" },
-  { who: "Iqra", what: "commented on issue #18", when: "2d ago" },
+  { who: "Saptarisi", what: "pushed to mentor-connect", when: "2h ago" },
+  { who: "Rian", what: "opened PR #42 (bugfix)", when: "6h ago" },
+  { who: "Jyotishman", what: "created repo bug-factory", when: "1d ago" },
+  { who: "Hridayam", what: "commented on issue #18", when: "2d ago" },
 ];
 
 const projectStatusPie = [

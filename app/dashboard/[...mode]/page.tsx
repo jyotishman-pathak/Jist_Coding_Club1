@@ -12,6 +12,7 @@ import UpcomingEvents from "@/components/dashboard/subDashboard/events/UpcomingE
 import Completed from "@/components/dashboard/subDashboard/projects/Completed";
 import { Members } from "@/components/landingPage/Members";
 import Leaderboard from "@/components/dashboard/subDashboard/community/Leaderboard";
+import Ongoing from "@/components/dashboard/subDashboard/projects/Ongoing";
 
 export default function ModePage() {
   const pathname = usePathname();
@@ -27,7 +28,7 @@ export default function ModePage() {
   if (pathname === "/dashboard/events/hackathons") return <Hackathons />;
 
   // Projects
-  if (pathname === "/dashboard/projects/ongoing") return <OngoingProjects />;
+  if (pathname === "/dashboard/projects/ongoing") return <Ongoing />;
   if (pathname === "/dashboard/projects/completed") return <Completed />;
 
   // Resources
