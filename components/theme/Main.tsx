@@ -11,12 +11,14 @@ const Main = ({children}:{children: ReactNode}) => {
 
  
      
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+   <ThemeProvider
+  attribute="class"
+  defaultTheme="dark"
+  enableSystem={false}
+  disableTransitionOnChange
+
+  forcedTheme='dark'
+>
               <Toaster />
   {children}
         </ThemeProvider>

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import {
   Card,
@@ -53,6 +53,8 @@ import {
   Pie,
   Cell,
 } from "recharts";
+import  { Events, Occuring} from "@/lib/backend/fetch";
+import axios from "axios";
 
 // ---------- Static Demo Data ----------
 const kpis = [
@@ -63,13 +65,13 @@ const kpis = [
 ];
 
 const activityData = [
-  { day: "Mon", commits: 9 },
-  { day: "Tue", commits: 12 },
-  { day: "Wed", commits: 7 },
-  { day: "Thu", commits: 15 },
-  { day: "Fri", commits: 11 },
-  { day: "Sat", commits: 18 },
-  { day: "Sun", commits: 5 },
+  { day: "Aug", commits: 2 },
+  { day: "Sep", commits:0 },
+  { day: "Oct", commits: 0 },
+  { day: "Nov", commits: 0 },
+  { day: "Dec", commits: 0 },
+  { day: "Jan", commits: 0 },
+  { day: "Feb", commits: 0 },
 ];
 
 const projectProgress = [
@@ -129,6 +131,29 @@ const projectStatusPie = [
 
 // -------------------------------------
 export default function Page() {
+
+const [upcomingEvents, setUpcomingEvents] = useState<Events[]>([]);
+
+  useEffect(() => {
+    const fetchEvent = async () => {
+      try {
+        const res = await axios.get<Events[]>("/api/events");
+        console.log("Events fetched:", res.data);
+
+        // 👇 yaha state update karna zaruri hai
+        setUpcomingEvents(res.data);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+
+    fetchEvent();
+  }, []);
+
+
+
+
+
   return (
     <div className="flex flex-1 flex-col gap-6 p-4 md:p-6">
       {/* Header */}
@@ -204,21 +229,24 @@ export default function Page() {
           <CardContent>
             <ScrollArea className="h-72 pr-3">
               <div className="space-y-4">
-                {upcomingEvents.map((e, i) => (
-                  <div key={i} className="rounded-lg border p-3">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <div className="font-medium">{e.title}</div>
-                        <div className="text-sm text-muted-foreground">{e.date} · {e.location}</div>
+               {upcomingEvents.map((e) => (
+                    <div key={e.id} className="rounded-lg border p-3">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <div className="font-medium">{e.projectTitle}</div>
+                          <div className="text-sm text-muted-foreground">
+                            {new Date(e.createdAt).toLocaleDateString()} · {e.technologies?.join(", ") || "N/A"}
+                          </div>
+                        </div>
+                        <Badge variant="secondary">{Occuring[e.occuring]}</Badge>
                       </div>
-                      <Badge variant="secondary">{e.tag}</Badge>
+                      <div className="mt-3 flex gap-2">
+                        <Button size="sm" variant="outline" className="h-8">Details</Button>
+                        <Button size="sm" className="h-8">RSVP</Button>
+                      </div>
                     </div>
-                    <div className="mt-3 flex gap-2">
-                      <Button size="sm" variant="outline" className="h-8">Details</Button>
-                      <Button size="sm" className="h-8">RSVP</Button>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+
               </div>
             </ScrollArea>
           </CardContent>
