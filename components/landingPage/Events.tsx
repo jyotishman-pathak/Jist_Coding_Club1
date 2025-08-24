@@ -42,27 +42,27 @@ export default function EventsSection() {
   ];
 
   const pastEvents = [
-    {
-      title: "Hackathon 2024",
-      date: "12 Aug, 2024",
-      image: "/events/hackathon2024.jpg", // put inside public/events
-      description:
-        "A thrilling 24-hour hackathon where students built innovative solutions ranging from AI-powered apps to IoT prototypes. Over 120 participants collaborated and presented their projects."
-    },
+   {
+    title: "Intro to AI/ML",
+    date: "23 Aug, 2025",
+    image: "/pastEvents/saurav1.jpeg",
+    description:
+      "An engaging session introducing Artificial Intelligence and Machine Learning. Covered the basics of AI/ML and gave a hands-on introduction to Linear Regression."
+  },
     {
       title: "Git & GitHub Workshop",
-      date: "20 Jul, 2024",
-      image: "/events/gitworkshop.jpg",
+      date: "24 Aug, 2025",
+      image: "/pastEvents/jyotishman2.jpeg",
       description:
         "Hands-on session where participants learned version control, branching, pull requests, and collaborative coding on GitHub."
     },
-    {
-      title: "Frontend Bootcamp",
-      date: "15 Jun, 2024",
-      image: "/events/frontendbootcamp.jpg",
-      description:
-        "An intensive 2-day bootcamp covering HTML, CSS, and JavaScript basics. Students built their first responsive portfolio websites."
-    }
+     {
+    title: "App Dev Bootcamp",
+    date: "24 Aug, 2025",
+    image: "/pastEvents/ezaz2.jpeg",
+    description:
+      "A bootcamp introducing Flutter and Google IDX. Participants learned cross-platform development and built a simple Todo app as their first project."
+  }
   ];
 
   return (
@@ -164,6 +164,7 @@ export default function EventsSection() {
               >
                 <div className="relative h-48 w-full">
                   <Image
+                  
                     src={event.image}
                     alt={event.title}
                     fill

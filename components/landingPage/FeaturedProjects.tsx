@@ -7,17 +7,17 @@ import { BackgroundBeamsWithCollision } from "../ui/background-beams-with-collis
 export function FeaturedProjects() {
   const projects = [
     {
-      title: "Comet Invitation",
+      title: "Attendence Manger",
       code: "#F7RA",
       image: "/projects/attend.png",
     },
     {
-      title: "Portfolio Website",
+      title: "Notion Notes Taker",
       code: "#WD23",
       image: "/projects/notion.png",
     },
     {
-      title: "Hackathon Winner App",
+      title: "Github Commit Manger",
       code: "#HACK",
       image: "/projects/github.png",
     },
