@@ -2,8 +2,8 @@
 import { usePathname, redirect } from "next/navigation";
 
 import ProfileCard from "@/components/dashboard/profileCard";
-import EventList from "@/components/dashboard/EventList";
-import OngoingProjects from "@/components/dashboard/OngoingProjects";
+
+
 import RoadmapResources from "@/components/dashboard/RoadmapResources";
 
 import Hackathons from "@/components/dashboard/subDashboard/events/Hackathons";

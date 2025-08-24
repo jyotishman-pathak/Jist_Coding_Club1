@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, Clock, MapPin, Users } from 'lucide-react';
+import Image from "next/image";
 
 export default function EventsSection() {
   const upcomingEvents = [
@@ -40,6 +41,30 @@ export default function EventsSection() {
     }
   ];
 
+  const pastEvents = [
+    {
+      title: "Hackathon 2024",
+      date: "12 Aug, 2024",
+      image: "/events/hackathon2024.jpg", // put inside public/events
+      description:
+        "A thrilling 24-hour hackathon where students built innovative solutions ranging from AI-powered apps to IoT prototypes. Over 120 participants collaborated and presented their projects."
+    },
+    {
+      title: "Git & GitHub Workshop",
+      date: "20 Jul, 2024",
+      image: "/events/gitworkshop.jpg",
+      description:
+        "Hands-on session where participants learned version control, branching, pull requests, and collaborative coding on GitHub."
+    },
+    {
+      title: "Frontend Bootcamp",
+      date: "15 Jun, 2024",
+      image: "/events/frontendbootcamp.jpg",
+      description:
+        "An intensive 2-day bootcamp covering HTML, CSS, and JavaScript basics. Students built their first responsive portfolio websites."
+    }
+  ];
+
   return (
     <section id="events" className="relative flex w-full items-center justify-center py-20">
       {/* Grid Background */}
@@ -67,7 +92,7 @@ export default function EventsSection() {
         </div>
 
         {/* Upcoming Events */}
-        <div>
+        <div className="mb-20">
           <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">Upcoming Events</h3>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {upcomingEvents.map((event, index) => (
@@ -122,6 +147,35 @@ export default function EventsSection() {
                   <Button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700">
                     Register Now
                   </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        {/* Past Events */}
+        <div>
+          <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">Past Events</h3>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {pastEvents.map((event, index) => (
+              <Card
+                key={index}
+                className="group hover:shadow-lg transition-all duration-300 border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden"
+              >
+                <div className="relative h-48 w-full">
+                  <Image
+                    src={event.image}
+                    alt={event.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-xl font-semibold">{event.title}</CardTitle>
+                  <p className="text-sm text-gray-500">{event.date}</p>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm">{event.description}</p>
                 </CardContent>
               </Card>
             ))}
