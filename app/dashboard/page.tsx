@@ -56,10 +56,10 @@ import {
 
 // ---------- Static Demo Data ----------
 const kpis = [
-  { title: "Projects", value: 12, sub: "+3 this month", icon: Code2 },
-  { title: "Events", value: 4, sub: "2 this week", icon: Calendar },
-  { title: "Members", value: 85, sub: "+11 joined", icon: Users },
-  { title: "Streak (max)", value: 27, sub: "🔥 club record", icon: Flame },
+  { title: "Projects", value: 1, sub: "no updates this month", icon: Code2 },
+  { title: "Events Attended", value: 2, sub: "2 this week", icon: Calendar },
+  { title: "Members", value: 349, sub: "+11 joined", icon: Users },
+  { title: "Streak (max)", value:2, sub: "🔥 club record", icon: Flame },
 ];
 
 const activityData = [
@@ -101,10 +101,10 @@ const upcomingEvents = [
 ];
 
 const leaderboard = [
-  { name: "Aarav", score: 1280, streak: 19 },
-  { name: "Sara", score: 1120, streak: 15 },
-  { name: "Rishi", score: 990, streak: 12 },
-  { name: "Iqra", score: 870, streak: 10 },
+  { name: "Maruf", score: 1280, streak: 2},
+  { name: "Hridayam", score: 1120, streak: 2 },
+  { name: "Jyotishman", score: 990, streak: 2 },
+  { name: "Ezaz", score: 870, streak: 2 },
 ];
 
 const resources = [
