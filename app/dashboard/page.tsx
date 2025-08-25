@@ -100,7 +100,7 @@ export default function Page() {
   // KPIs from stats
   const kpis = [
     { title: "Projects", value: stats?.stats.projects ?? 0, sub: "no updates this month", icon: Code2 },
-    { title: "Events Attended", value: stats?.stats.eventsAttended ?? 0, sub: "so far", icon: Calendar },
+    { title: "Total Events", value: stats?.stats.eventsAttended ?? 0, sub: "so far", icon: Calendar },
     { title: "Members", value: stats?.stats.members ?? 0, sub: "active", icon: Users },
     { title: "Streak (max)", value: 2, sub: "🔥 club record", icon: Flame },
   ];
@@ -147,9 +147,9 @@ export default function Page() {
         <Card className="lg:col-span-2">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <ActivityIcon className="h-5 w-5" /> Weekly Activity
+              <ActivityIcon className="h-5 w-5" /> Club Activity Records
             </CardTitle>
-            <CardDescription>Commits pushed by club members (last 7 days)</CardDescription>
+            <CardDescription>Activities  pushed by JCC (last 7 days)</CardDescription>
           </CardHeader>
           <CardContent className="h-72">
             <ResponsiveContainer width="100%" height="100%">

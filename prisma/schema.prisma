@@ -7,21 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id                    Int          @id @default(autoincrement())
-  name                  String
-  email                 String       @unique
-  password              String
-  Department            String
-  ProgrammingExperience Int
-  Interest              String[]
-  createdAt             DateTime     @default(now())
-  updatedAt             DateTime     @updatedAt
-  leaderboard           Leaderboard?
-
-  @@map("user")
-}
-
 model Leaderboard {
   id          Int      @id @default(autoincrement())
   userId      Int      @unique
@@ -60,6 +45,19 @@ model hackathons {
   name        String
   description String
   fees        String
+}
+
+model User {
+  id                    Int          @id @default(autoincrement())
+  name                  String
+  email                 String       @unique
+  password              String
+  Department            String
+  ProgrammingExperience Int
+  Interest              String[]
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime
+  leaderboard           Leaderboard?
 }
 
 enum Occuring {
