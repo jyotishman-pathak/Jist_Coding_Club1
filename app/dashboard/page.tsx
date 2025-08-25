@@ -31,7 +31,7 @@ import {
 
 // --------- Static Data (dummy) -------------
 const activityData = [
-  { day: "Aug", commits: 2 },
+  { day: "Aug", commits: 3 },
   { day: "Sep", commits: 0 },
   { day: "Oct", commits: 0 },
   { day: "Nov", commits: 0 },
@@ -49,7 +49,7 @@ const projectProgress = [
 
 const recentActivity = [
   { who: "Saptarisi", what: "pushed to mentor-connect", when: "2h ago" },
-  { who: "Rian", what: "opened PR #42 (bugfix)", when: "6h ago" },
+  { who: "Ezaz", what: "opened PR #42 (bugfix)", when: "6h ago" },
   { who: "Jyotishman", what: "created repo bug-factory", when: "1d ago" },
   { who: "Hridayam", what: "commented on issue #18", when: "2d ago" },
 ];

@@ -37,20 +37,20 @@ export const data = {
   },
   teams: [
     {
-      name: "Web Dev Squad",
+      name: "Jist Coding Club",
       logo: Globe,
-      plan: "Frontend + Backend",
+      plan: "Code. Collaborate. Conquer",
     },
-    {
-      name: "AI & ML Crew",
-      logo: Brain,
-      plan: "Machine Learning",
-    },
-    {
-      name: "CP Ninjas",
-      logo: Code2,
-      plan: "Competitive Programming",
-    },
+    // {
+    //   name: "AI & ML Crew",
+    //   logo: Brain,
+    //   plan: "Machine Learning",
+    // },
+    // {
+    //   name: "CP Ninjas",
+    //   logo: Code2,
+    //   plan: "Competitive Programming",
+    // },
   ],
   navMain: [
     {

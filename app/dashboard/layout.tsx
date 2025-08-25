@@ -20,6 +20,15 @@ import { useSession } from "next-auth/react"
 import { redirect, usePathname } from "next/navigation"
 import React, { ReactNode } from "react"
 
+
+
+
+
+
+
+
+
+
 const DashboardLayout = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname()
   const segments = pathname.split("/").filter(Boolean)
