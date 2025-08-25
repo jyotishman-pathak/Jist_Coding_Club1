@@ -47,21 +47,21 @@ status: "Early Bird"
   const pastEvents = [
    {
     title: "Intro to AI/ML",
-    date: "23 Aug, 2025",
+    date: "22 Aug, 2025",
     image: "/pastEvents/saurav1.jpeg",
     description:
       "An engaging session introducing Artificial Intelligence and Machine Learning. Covered the basics of AI/ML and gave a hands-on introduction to Linear Regression."
   },
     {
       title: "Git & GitHub Workshop",
-      date: "24 Aug, 2025",
+      date: "23 Aug, 2025",
       image: "/pastEvents/jyotishman2.jpeg",
       description:
         "Hands-on session where participants learned version control, branching, pull requests, and collaborative coding on GitHub."
     },
      {
     title: "App Dev Bootcamp",
-    date: "24 Aug, 2025",
+    date: "23 Aug, 2025",
     image: "/pastEvents/ezaz2.jpeg",
     description:
       "A bootcamp introducing Flutter and Google IDX. Participants learned cross-platform development and built a simple Todo app as their first project."

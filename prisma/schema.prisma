@@ -8,38 +8,59 @@ datasource db {
 }
 
 model User {
-  id                    Int      @id @default(autoincrement())
+  id                    Int          @id @default(autoincrement())
   name                  String
-  email                 String   @unique
+  email                 String       @unique
   password              String
   Department            String
   ProgrammingExperience Int
   Interest              String[]
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
   leaderboard           Leaderboard?
-}
 
+  @@map("user")
+}
 
 model Leaderboard {
   id          Int      @id @default(autoincrement())
-  userId      Int  @unique
-  user        User     @relation(fields: [userId], references: [id])
-
-  hackathon   Int      @default(0)
-  workshop    Int      @default(0)
-  quiz        Int      @default(0)
+  userId      Int      @unique
   commits     Int      @default(0)
-
-
-  totalPoints Int      @default(20)
-
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  hackathon   Int      @default(0)
+  quiz        Int      @default(0)
+  totalPoints Int      @default(20)
+  workshop    Int      @default(0)
+  user        User     @relation(fields: [userId], references: [id])
 }
 
+model Events {
+  id                 Int      @id @default(autoincrement())
+  projectTitle       String
+  projectDescription String
+  instructor         String
+  photo              String?
+  technologies       String[]
+  occuring           Occuring
+  createdAt          DateTime @default(now())
+}
 
+model Projects {
+  id                 Int              @id @default(autoincrement())
+  projectTitle       String
+  projectDescription String
+  githubUrl          String?
+  createdAt          DateTime         @default(now())
+  occuring           ProjectOccurence
+}
 
+model hackathons {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String
+  fees        String
+}
 
 enum Occuring {
   UPCOMMING
@@ -47,34 +68,7 @@ enum Occuring {
   HACKTHONS
 }
 
-model Events {
-  id                 Int       @id @default(autoincrement())
-  projectTitle       String
-  projectDescription String
-  instructor         String
-  photo              String?
-  technologies       String[]
-  occuring           Occuring  
-  createdAt          DateTime  @default(now())
-}
-
 enum ProjectOccurence {
-  ONGOING 
+  ONGOING
   COMPLETED
-}
-model Projects {
-  id                 Int                 @id @default(autoincrement())
-  projectTitle       String
-  projectDescription String
-  githubUrl          String?
-  occuring           ProjectOccurence   
-  createdAt          DateTime            @default(now())
-}
-
-model hackathons {
-  id Int @id @default(autoincrement())
-  name String
-  description String
-  fees String
-
 }

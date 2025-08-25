@@ -111,7 +111,7 @@ export default function Page() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Dashboard</h1>
-          <p className="text-muted-foreground">JIST Coding Club · Web Dev Squad</p>
+          <p className="text-muted-foreground">JIST Coding Club </p>
         </div>
         <div className="flex items-center gap-2">
           <Button variant="outline" className="gap-2">
@@ -175,7 +175,7 @@ export default function Page() {
             <CardTitle className="flex items-center gap-2">
               <Calendar className="h-5 w-5" />  Events
             </CardTitle>
-            <CardDescription>This drops at the club</CardDescription>
+            <CardDescription>The drops at the club</CardDescription>
           </CardHeader>
           <CardContent>
             <ScrollArea className="h-72 pr-3">
