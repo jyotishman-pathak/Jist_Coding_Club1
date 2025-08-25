@@ -5,23 +5,27 @@ import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { BackgroundBeamsWithCollision } from "../ui/background-beams-with-collision";
 
 export function FeaturedProjects() {
-  const projects = [
-    {
-      title: "Attendence Manger",
-      code: "#F7RA",
-      image: "/projects/attend.png",
-    },
-    {
-      title: "Notion Notes Taker",
-      code: "#WD23",
-      image: "/projects/notion.png",
-    },
-    {
-      title: "Github Commit Manger",
-      code: "#HACK",
-      image: "/projects/github.png",
-    },
-  ];
+const projects = [
+  {
+    title: "Attendance Manager ",  
+    code: "#F7RA",
+    image: "/projects/attend.png",
+    href: "https://github.com/jyotishman-pathak/attendanceManger"
+  },
+  {
+    title: "Notion Notes ",   
+    code: "#WD23",
+    image: "/projects/notion.png",
+    href :"https://github.com/jyotishman-pathak/Loom"
+  },
+  {
+    title: "Git Commit Guardian ",  
+    code: "#HACK",
+    image: "/projects/github.png",
+    href :"https://github.com/jyotishman-pathak/gitGuardian"
+  },
+];
+
 
   return (
     <BackgroundBeamsWithCollision className="relative min-h-fit py-24 bg-neutral-950">
@@ -72,19 +76,15 @@ export function FeaturedProjects() {
                   <CardItem
                     translateZ={20}
                     as="a"
-                    href="#"
+                    href={project.href}
                     target="__blank"
                     className="px-4 py-2 rounded-xl text-xs font-normal text-white hover:bg-white/10 transition"
-                  >
+                
+                
+                >
                     View →
                   </CardItem>
-                  <CardItem
-                    translateZ={20}
-                    as="button"
-                    className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold transition"
-                  >
-                    Details
-                  </CardItem>
+                
                 </div>
               </CardBody>
             </CardContainer>

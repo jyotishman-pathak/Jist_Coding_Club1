@@ -15,4 +15,5 @@ export const projectSchema = z.object({
   projectTitle: z.string().min(4, "Minimum 4 characters required"),
   projectDescription: z.string().min(1, "Description is required"),
   githubUrl: z.string().url().optional(),
+  occuring: z.enum(["ONGOING", "COMPLETED"]), 
 });

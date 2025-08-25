@@ -1,72 +1,38 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { cn } from "@/lib/utils";
 import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardTitle,
-  CardDescription,
-  CardFooter,
+  Card, CardHeader, CardContent, CardTitle, CardDescription,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import {
-  Code2,
-  Calendar,
-  Users,
-  Trophy,
-  Activity as ActivityIcon,
-  Github,
-  ExternalLink,
-  Flame,
-  Star,
-  Rocket,
-  Plus,
+  Code2, Calendar, Users, Trophy, Activity as ActivityIcon,
+  Github, ExternalLink, Flame, Rocket, Plus,
 } from "lucide-react";
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  AreaChart,
-  Area,
-  PieChart,
-  Pie,
-  Cell,
+  AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer,
+  PieChart, Pie, Cell,
 } from "recharts";
-import  { Events, Occuring} from "@/lib/backend/fetch";
-import axios from "axios";
 
-// ---------- Static Demo Data ----------
-const kpis = [
-  { title: "Projects", value: 1, sub: "no updates this month", icon: Code2 },
-  { title: "Events Attended", value: 2, sub: "2 this week", icon: Calendar },
-  { title: "Members", value: 349, sub: "+11 joined", icon: Users },
-  { title: "Streak (max)", value:2, sub: "🔥 club record", icon: Flame },
-];
+import {
+  Events, getLeaderboardScore, Occuring,
+  LeaderboardEntry, StatsResponse
+} from "@/lib/backend/fetch";
 
+// --------- Static Data (dummy) -------------
 const activityData = [
   { day: "Aug", commits: 2 },
-  { day: "Sep", commits:0 },
+  { day: "Sep", commits: 0 },
   { day: "Oct", commits: 0 },
   { day: "Nov", commits: 0 },
   { day: "Dec", commits: 0 },
@@ -79,41 +45,6 @@ const projectProgress = [
   { name: "Hackathon Site", progress: 95 },
   { name: "Code Streak App", progress: 38 },
   { name: "Mentor Connect", progress: 54 },
-];
-
-const upcomingEvents = [
-  {
-    title: "React + API Workshop",
-    date: "Tue, 27 Aug · 5:30 PM",
-    location: "Lab 2",
-    tag: "Workshop",
-  },
-  {
-    title: "Open Source Sprint",
-    date: "Fri, 30 Aug · 6:00 PM",
-    location: "Club Room",
-    tag: "Sprint",
-  },
-  {
-    title: "DSA Peer Session",
-    date: "Sun, 1 Sep · 11:00 AM",
-    location: "Library Hall",
-    tag: "DSA",
-  },
-];
-
-const leaderboard = [
-  { name: "Maruf", score: 1280, streak: 2},
-  { name: "Hridayam", score: 1120, streak: 2 },
-  { name: "Jyotishman", score: 990, streak: 2 },
-  { name: "Ezaz", score: 870, streak: 2 },
-];
-
-const resources = [
-  { name: "Frontend Roadmap", type: "Guide", href: "#" },
-  { name: "Git Commands Cheatsheet", type: "Doc", href: "#" },
-  { name: "API Templates", type: "Repo", href: "#" },
-  { name: "System Design Notes", type: "Notes", href: "#" },
 ];
 
 const recentActivity = [
@@ -129,30 +60,50 @@ const projectStatusPie = [
   { name: "Completed", value: 3 },
 ];
 
+const resources = [
+  { name: "Frontend Roadmap", type: "Guide", href: "#" },
+  { name: "Git Commands Cheatsheet", type: "Doc", href: "#" },
+  { name: "API Templates", type: "Repo", href: "#" },
+  { name: "System Design Notes", type: "Notes", href: "#" },
+];
+
 // -------------------------------------
 export default function Page() {
-
-const [upcomingEvents, setUpcomingEvents] = useState<Events[]>([]);
+  const [upcomingEvents, setUpcomingEvents] = useState<Events[]>([]);
+  const [score, setScore] = useState<LeaderboardEntry[]>([]);
+  const [stats, setStats] = useState<StatsResponse | null>(null);
 
   useEffect(() => {
     const fetchEvent = async () => {
       try {
         const res = await axios.get<Events[]>("/api/events");
-        console.log("Events fetched:", res.data);
-
-        // 👇 yaha state update karna zaruri hai
         setUpcomingEvents(res.data);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
     };
 
+    const fetchStats = async () => {
+      try {
+        const res = await axios.get<StatsResponse>("/api/stats");
+        setStats(res.data);
+      } catch (error) {
+        console.error("Error fetching stats:", error);
+      }
+    };
+
+    getLeaderboardScore().then(setScore).catch(console.error);
     fetchEvent();
+    fetchStats();
   }, []);
 
-
-
-
+  // KPIs from stats
+  const kpis = [
+    { title: "Projects", value: stats?.stats.projects ?? 0, sub: "no updates this month", icon: Code2 },
+    { title: "Events Attended", value: stats?.stats.eventsAttended ?? 0, sub: "so far", icon: Calendar },
+    { title: "Members", value: stats?.stats.members ?? 0, sub: "active", icon: Users },
+    { title: "Streak (max)", value: 2, sub: "🔥 club record", icon: Flame },
+  ];
 
   return (
     <div className="flex flex-1 flex-col gap-6 p-4 md:p-6">
@@ -172,7 +123,7 @@ const [upcomingEvents, setUpcomingEvents] = useState<Events[]>([]);
         </div>
       </div>
 
-      {/* KPI Cards */}
+      {/* KPIs */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {kpis.map((k) => (
           <Card key={k.title} className="relative overflow-hidden">
@@ -190,7 +141,7 @@ const [upcomingEvents, setUpcomingEvents] = useState<Events[]>([]);
         ))}
       </div>
 
-      {/* Middle: Charts + Events + Leaderboard */}
+      {/* Middle: Charts + Events */}
       <div className="grid gap-4 lg:grid-cols-3">
         {/* Activity Chart */}
         <Card className="lg:col-span-2">
@@ -222,38 +173,37 @@ const [upcomingEvents, setUpcomingEvents] = useState<Events[]>([]);
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Calendar className="h-5 w-5" /> Upcoming Events
+              <Calendar className="h-5 w-5" />  Events
             </CardTitle>
-            <CardDescription>This week at the club</CardDescription>
+            <CardDescription>This drops at the club</CardDescription>
           </CardHeader>
           <CardContent>
             <ScrollArea className="h-72 pr-3">
               <div className="space-y-4">
-               {upcomingEvents.map((e) => (
-                    <div key={e.id} className="rounded-lg border p-3">
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <div className="font-medium">{e.projectTitle}</div>
-                          <div className="text-sm text-muted-foreground">
-                            {new Date(e.createdAt).toLocaleDateString()} · {e.technologies?.join(", ") || "N/A"}
-                          </div>
+                {upcomingEvents.map((e) => (
+                  <div key={e.id} className="rounded-lg border p-3">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <div className="font-medium">{e.projectTitle}</div>
+                        <div className="text-sm text-muted-foreground">
+                          {new Date(e.createdAt).toLocaleDateString()} · {e.technologies?.join(", ") || "N/A"}
                         </div>
-                        <Badge variant="secondary">{Occuring[e.occuring]}</Badge>
                       </div>
-                      <div className="mt-3 flex gap-2">
-                        <Button size="sm" variant="outline" className="h-8">Details</Button>
-                        <Button size="sm" className="h-8">RSVP</Button>
-                      </div>
+                      <Badge variant="secondary">{Occuring[e.occuring]}</Badge>
                     </div>
-                  ))}
-
+                    <div className="mt-3 flex gap-2">
+                      <Button size="sm" variant="outline" className="h-8">Details</Button>
+                      <Button size="sm" className="h-8">RSVP</Button>
+                    </div>
+                  </div>
+                ))}
               </div>
             </ScrollArea>
           </CardContent>
         </Card>
       </div>
 
-      {/* Lower Grid: Projects / Leaderboard / Resources / Status Pie */}
+      {/* Lower Grid: Projects + Leaderboard + Resources */}
       <div className="grid gap-4 xl:grid-cols-3">
         {/* Projects & Progress */}
         <Card className="xl:col-span-2">
@@ -328,30 +278,41 @@ const [upcomingEvents, setUpcomingEvents] = useState<Events[]>([]);
           {/* Leaderboard */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2"><Trophy className="h-5 w-5" /> Leaderboard</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <Trophy className="h-5 w-5" /> Leaderboard
+              </CardTitle>
               <CardDescription>Weekly points & streak</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {leaderboard.map((m, i) => (
-                  <div key={m.name} className="flex items-center justify-between rounded-md border p-3">
+                {score.map((m, i) => (
+                  <div key={m.user.id} className="flex items-center justify-between rounded-md border p-3">
+                    {/* Left side */}
                     <div className="flex items-center gap-3">
                       <Avatar className="h-8 w-8">
-                        <AvatarFallback>{m.name.slice(0,2).toUpperCase()}</AvatarFallback>
+                        <AvatarFallback>
+                          {m.user.name.slice(0, 2).toUpperCase()}
+                        </AvatarFallback>
                       </Avatar>
                       <div>
-                        <div className="font-medium leading-none">{i + 1}. {m.name}</div>
-                        <div className="text-xs text-muted-foreground">Streak {m.streak} days</div>
+                        <div className="font-medium leading-none">
+                          {i + 1}. {m.user.name}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          Hackathons: {m.hackathon}, Quiz: {m.quiz}
+                        </div>
                       </div>
                     </div>
-                    <Badge>{m.score}</Badge>
+
+                    {/* Right side */}
+                    <Badge>{m.totalPoints}</Badge>
                   </div>
                 ))}
               </div>
             </CardContent>
           </Card>
 
-          {/* Project Status (Pie) */}
+          {/* Project Status Pie */}
           <Card>
             <CardHeader>
               <CardTitle>Project Status</CardTitle>
@@ -391,18 +352,6 @@ const [upcomingEvents, setUpcomingEvents] = useState<Events[]>([]);
               </div>
             </CardContent>
           </Card>
-        </div>
-      </div>
-
-      {/* Footer CTA */}
-      <div className="rounded-xl border p-4 md:p-6 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div>
-          <div className="font-semibold">Want to feature your project on the homepage?</div>
-          <p className="text-sm text-muted-foreground">Submit a short write‑up with screenshots. We rotate highlights weekly.</p>
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline">View Guidelines</Button>
-          <Button>Submit Project</Button>
         </div>
       </div>
     </div>

@@ -1,42 +1,41 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, MapPin, Clock, Star } from "lucide-react";
+import { Calendar, MapPin, Clock } from "lucide-react";
+import axios from "axios";
+import { Events, Occuring } from "@/lib/backend/fetch";
 
-const events = [
-  {
-    id: 1,
-    title: "Hackathon 2025",
-    date: "soon..",
-    time: "coming soon",
-    location: "Exam hall",
-    description: "A 6-hour coding challenge where teams build real-world solutions.",
-    featured: true,
-  },
-  {
-    id: 2,
-    title: "Web Dev Workshop",
-    date: "Sept 20, 2025",
-    time: "2:00 PM - 5:00 PM",
-    location: "Lab 204",
-    description: "Hands-on workshop on building responsive web apps with Next.js.",
-  },
-  {
-    id: 3,
-    title: "AI/ML Meetup",
-    date: "Oct 5, 2025",
-    time: "4:00 PM - 6:00 PM",
-    location: "Online (Google Meet)",
-    description: "Discussion and demo on latest trends in AI/ML.",
-  },
-];
+
+// ✅ must be string enums (to match your API JSON)
+
+
+export async function fetchEvents(): Promise<Events[]> {
+  try {
+    const res = await axios.get<Events[]>("/api/events");
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    return [];
+  }
+}
 
 const UpcomingEvents = () => {
+  const [upcomingEvents, setUpcomingEvents] = useState<Events[]>([]);
+
+  useEffect(() => {
+    const loadEvents = async () => {
+      const allEvents = await fetchEvents();
+    
+      const filtered = allEvents.filter((e) => e.occuring === Occuring.UPCOMMING);
+      setUpcomingEvents(filtered);
+    };
+    loadEvents();
+  }, []);
+
   return (
     <div className="p-6 space-y-10">
-      {/* Header + Stats */}
       <div className="text-center space-y-2">
         <h1 className="text-4xl font-bold">📅 Upcoming Events</h1>
         <p className="text-gray-600 max-w-xl mx-auto">
@@ -44,64 +43,49 @@ const UpcomingEvents = () => {
         </p>
         <div className="flex justify-center gap-6 mt-4">
           <div className="text-center">
-            <p className="text-2xl font-bold">{events.length}</p>
-            <p className="text-gray-500 text-sm">Total Events</p>
-          </div>
-          <div className="text-center">
-            <p className="text-2xl font-bold">
-              {events.filter(e => e.featured).length}
-            </p>
-            <p className="text-gray-500 text-sm">Featured</p>
-          </div>
-          <div className="text-center">
-            <p className="text-2xl font-bold">{events.filter(e => !e.featured).length}</p>
-            <p className="text-gray-500 text-sm">Workshops / Meetups</p>
+            <p className="text-2xl font-bold">{upcomingEvents.length}</p>
+            <p className="text-gray-500 text-sm">Upcoming</p>
           </div>
         </div>
       </div>
 
-      {/* Timeline / Events */}
       <div className="relative border-l-2 border-gray-200 ml-4">
-        {events.map((event, idx) => (
+        {upcomingEvents.map((event, idx) => (
           <div key={event.id} className="mb-10 ml-6 relative">
-            {/* Timeline Dot */}
             <span
               className={`absolute -left-4 top-2 w-8 h-8 rounded-full flex items-center justify-center ${
-                event.featured ? "bg-blue-600 text-white" : "bg-gray-300 text-gray-700"
+                idx === 0 ? "bg-blue-600 text-white" : "bg-gray-300 text-gray-700"
               }`}
             >
-              {event.featured ? <Star size={16} /> : idx + 1}
+              {idx + 1}
             </span>
 
-            <Card className={`shadow-md ${event.featured ? "border-blue-500" : ""}`}>
+            <Card className="shadow-md">
               <CardHeader className="flex justify-between items-start">
-                <CardTitle className="text-lg font-semibold">{event.title}</CardTitle>
-                {event.featured && (
-                  <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm font-medium">
-                    Featured
-                  </span>
-                )}
+                <CardTitle className="text-lg font-semibold">{event.projectTitle}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
-                <p className="text-gray-700">{event.description}</p>
+                <p className="text-gray-700">{event.projectDescription}</p>
                 <div className="flex flex-wrap gap-3 text-sm text-gray-500">
                   <span className="flex items-center gap-1 px-2 py-1 rounded-lg bg-gray-100">
-                    <Calendar size={16} /> {event.date}
+                    <Calendar size={16} /> {new Date(event.createdAt).toDateString()}
                   </span>
                   <span className="flex items-center gap-1 px-2 py-1 rounded-lg bg-gray-100">
-                    <Clock size={16} /> {event.time}
+                    <MapPin size={16} /> Location TBD
                   </span>
                   <span className="flex items-center gap-1 px-2 py-1 rounded-lg bg-gray-100">
-                    <MapPin size={16} /> {event.location}
+                    <Clock size={16} /> Time TBD
                   </span>
                 </div>
-                <Button className={`mt-2 ${event.featured ? "bg-blue-600 text-white" : ""}`}>
-                  {event.featured ? "Register Now" : "View Details"}
-                </Button>
+                <Button className="mt-2">View Details</Button>
               </CardContent>
             </Card>
           </div>
         ))}
+
+        {upcomingEvents.length === 0 && (
+          <p className="text-center text-gray-500">No upcoming events found.</p>
+        )}
       </div>
     </div>
   );

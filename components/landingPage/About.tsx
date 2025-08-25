@@ -23,13 +23,13 @@ export function AboutJistCodingClub() {
                 We’re the JIST Coding Club—a crew of fearless developers, designers, and dreamers turning wild ideas into reality. From hackathons to AI breakthroughs, we build, break, and innovate together.
               </p>
             </div>
-            <img
+            {/* <img
               src="/members/club-vibes.jpg"
               width={500}
               height={500}
               alt="Club Vibes"
               className="absolute -right-6 lg:-right-[30%] -bottom-8 object-contain rounded-2xl shadow-lg transition-transform duration-300 hover:scale-105"
-            />
+            /> */}
           </WobbleCard>
 
           {/* What We Do */}
@@ -58,13 +58,13 @@ export function AboutJistCodingClub() {
                 Join a squad of passionate coders, tackle real-world challenges, and connect with pros. Whether you’re coding your first line or building AI models, we’ve got your back.
               </p>
             </div>
-            <img
+            {/* <img
               src="/coding-club/innovation.png"
               width={500}
               height={500}
               alt="Innovation"
               className="absolute -right-10 md:-right-[35%] lg:-right-[20%] -bottom-10 object-contain rounded-2xl shadow-lg transition-transform duration-300 hover:scale-105"
-            />
+            /> */}
           </WobbleCard>
         </div>
       </div>

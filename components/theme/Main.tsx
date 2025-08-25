@@ -3,7 +3,7 @@ import { ThemeProvider } from './theme-provider'
 import {NavbarMain} from '../landingPage/Navbar'
 import { Toaster } from 'sonner'
 import { SessionProvider } from 'next-auth/react'
-import { Analytics } from "@vercel/analytics/next"
+
 const Main = ({children}:{children: ReactNode}) => {
   return (
     <div className="">
@@ -17,9 +17,9 @@ const Main = ({children}:{children: ReactNode}) => {
   enableSystem={false}
   disableTransitionOnChange
 
-  forcedTheme='dark'
+  // forcedTheme='dark'
 >
-  <Analytics/>
+
               <Toaster />
   {children}
         </ThemeProvider>

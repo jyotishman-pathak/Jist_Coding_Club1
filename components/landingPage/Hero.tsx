@@ -55,7 +55,7 @@ export function Hero() {
           Learn. Build. Innovate.  
           From <span className="font-semibold text-foreground">Web Dev </span> 
           to <span className="font-semibold text-foreground">AI/ML</span>, 
-          we push the limits of technology together 🚀
+          we push the limits of technology together 
         </motion.p>
 
         {/* Buttons */}

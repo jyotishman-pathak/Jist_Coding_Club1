@@ -10,35 +10,38 @@ import Image from "next/image";
 export default function EventsSection() {
   const upcomingEvents = [
     {
-      title: "Intro to VsCode and Web Development",
-      date: "3 Sep, 2025",
-      time: "2:00 PM - 3:00 PM",
-      location: "Jist Campus",
-      attendees: 45,
-      category: "Workshop",
-      description: "Learn the basics of Visual Studio Code and how to set up your first web development project. Perfect for beginners!",
-      status: "Open Registration"
-    },
-    {
-      title: "Backend Development with Node.js & Express",
-      date: "5 Sep, 2025",
-      time: "4:00 PM - 6:30 PM",
-      location: "Jist Campus",
-      attendees: 55,
-      category: "Workshop",
-      description: "Learn how to create APIs, connect to databases, and build scalable backend services using Node.js and Express. Ideal for aspiring full-stack developers.",
-      status: "Open Registration"
-    },
-    {
-      title: "Problem Solving & Building Scalable Apps with Next.js",
-      date: "8 Sep, 2025",
-      time: "3:00 PM - 6:00 PM",
-      location: "Jist Campus",
-      attendees: 70,
-      category: "Workshop",
-      description: "Sharpen your DSA skills with live coding challenges, then dive into creating fast, SEO-friendly web apps using Next.js. A blend of problem-solving and modern web development.",
-      status: "Early Bird"
-    }
+    title: "Intro to VsCode and Web Development",
+    date: "Coming Soon",
+    time: "To be Decided",
+    location: "Jist Campus",
+    attendees: 5,
+    category: "Workshop",
+    description:
+      "Learn the basics of Visual Studio Code and how to set up your first web development project. Perfect for beginners!",
+    status: "Open Registration"
+  },
+  {
+    title: "Backend Development with Node.js & Express",
+    date: "Coming Soon",
+    time: "To be Decided",
+    location: "Jist Campus",
+    attendees: 5,
+    category: "Workshop",
+    description:
+      "Learn how to create APIs, connect to databases, and build scalable backend services using Node.js and Express. Ideal for aspiring full-stack developers.",
+    status: "Open Registration"
+  },
+  {
+   title: "Intro To Python",
+date: "Coming Soon",
+time: "To be Decided",
+location: "Jist Campus",
+attendees: 5,
+category: "Workshop",
+description:
+  "Get started with Python programming and explore how it powers Machine Learning. Learn the basics of Python syntax, data handling, and an introduction to ML concepts with hands-on examples.",
+status: "Early Bird"
+  }
   ];
 
   const pastEvents = [

@@ -19,12 +19,13 @@ export async function POST(request: NextRequest) {
     const validData = result.data;
     console.log("validated data", validData);
 
-    // Map validated data to match Prisma model
+   
     const newProject = await prisma.projects.create({
       data: {
         projectTitle: validData.projectTitle,
         projectDescription: validData.projectDescription,
         githubUrl: validData.githubUrl ?? null,
+        occuring : validData.occuring
       },
     });
 

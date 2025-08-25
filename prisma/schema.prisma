@@ -17,7 +17,29 @@ model User {
   Interest              String[]
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
+  leaderboard           Leaderboard?
 }
+
+
+model Leaderboard {
+  id          Int      @id @default(autoincrement())
+  userId      Int  @unique
+  user        User     @relation(fields: [userId], references: [id])
+
+  hackathon   Int      @default(0)
+  workshop    Int      @default(0)
+  quiz        Int      @default(0)
+  commits     Int      @default(0)
+
+
+  totalPoints Int      @default(20)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+
+
 
 enum Occuring {
   UPCOMMING
@@ -40,15 +62,13 @@ enum ProjectOccurence {
   ONGOING 
   COMPLETED
 }
-
 model Projects {
-  id  Int  @id @default(autoincrement())
-  projectTitle String
+  id                 Int                 @id @default(autoincrement())
+  projectTitle       String
   projectDescription String
-  githubUrl String?
-
-   createdAt          DateTime  @default(now())
-
+  githubUrl          String?
+  occuring           ProjectOccurence   
+  createdAt          DateTime            @default(now())
 }
 
 model hackathons {
