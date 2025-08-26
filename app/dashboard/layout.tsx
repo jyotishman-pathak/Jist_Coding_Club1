@@ -1,6 +1,7 @@
 "use client"
 
 import { AppSidebar } from "@/components/app-sidebar"
+import { JoinWhatsApp } from "@/components/dashboard/helper/JoinWapp"
 import { ModeToggle } from "@/components/theme/Mode"
 import {
   Breadcrumb,
@@ -82,8 +83,14 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
                   })}
                 </BreadcrumbList>
               </Breadcrumb>
-
+                   <div className="flex  items-center p-4 gap-2">
+ <JoinWhatsApp/>
               <ModeToggle />
+
+
+                   </div>
+                   
+                   
             </div>
           </div>
         </header>

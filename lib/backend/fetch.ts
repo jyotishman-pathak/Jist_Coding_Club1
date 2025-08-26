@@ -110,7 +110,7 @@ export interface Project {
 }
 
 export enum ProjectOccurence {
-  UPCOMMING = "UPCOMMING",
+ 
   ONGOING = "ONGOING",
   COMPLETED = "COMPLETED",
 }

@@ -6,26 +6,24 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    // Validate input against schema
-    const result = projectSchema.safeParse(body.data);
+    // Validate input directly
+    const result = projectSchema.safeParse(body);
 
     if (!result.success) {
-      return new Response(
-        JSON.stringify({ errors: result.error }),
-        { status: 400 }
-      );
+      return new Response(JSON.stringify({ errors: result.error }), {
+        status: 400,
+      });
     }
 
     const validData = result.data;
     console.log("validated data", validData);
 
-   
     const newProject = await prisma.projects.create({
       data: {
         projectTitle: validData.projectTitle,
         projectDescription: validData.projectDescription,
         githubUrl: validData.githubUrl ?? null,
-        occuring : validData.occuring
+        occuring: validData.occuring,
       },
     });
 

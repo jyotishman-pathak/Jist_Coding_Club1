@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Github } from "lucide-react";
 import { fetchProjects, Project } from "@/lib/backend/fetch";
 
-
 const Completed = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +13,11 @@ const Completed = () => {
   useEffect(() => {
     const loadProjects = async () => {
       const data = await fetchProjects();
-      setProjects(data);
+      // ✅ sirf COMPLETED wale hi rakho
+      const completedProjects = data.filter(
+        (project: Project) => project.occuring === "COMPLETED"
+      );
+      setProjects(completedProjects);
       setLoading(false);
     };
     loadProjects();
@@ -45,7 +48,9 @@ const Completed = () => {
             {/* Project Image */}
             {project.githubUrl && (
               <img
-                src={`https://source.unsplash.com/600x400/?${encodeURIComponent(project.projectTitle)}`}
+                src={`https://source.unsplash.com/600x400/?${encodeURIComponent(
+                  project.projectTitle
+                )}`}
                 alt={project.projectTitle}
                 className="w-full h-40 object-cover"
               />
