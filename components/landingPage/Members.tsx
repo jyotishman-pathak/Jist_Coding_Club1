@@ -6,6 +6,25 @@ import { StarsBackground } from "@/components/ui/stars-background";
 
 export function Members() {
   const items = [
+     {
+      image: "/members/kankan.jpeg",
+      title: "Kankan",
+      subtitle: "Lead + UI/UX Lead",
+      handle: "@kankan",
+      borderColor: "#3B82F6",
+      gradient: "linear-gradient(145deg, #3B82F6, #000)",
+      url: "https://github.com/sarahjohnson",
+    },
+
+     {
+      image: "/members/ezaz.jpeg",
+      title: "Ezaz Ahmed",
+      subtitle: "Co-Lead + App Lead",
+      handle: "@ezaz",
+      borderColor: "#3B82F6",
+      gradient: "linear-gradient(145deg, #3B82F6, #000)",
+      url: "https://www.linkedin.com/in/ezeehere/",
+    },
     {
       image: "/members/sap1.jpg",
       title: "Saptarshi Borkataky",
@@ -15,15 +34,7 @@ export function Members() {
       gradient: "linear-gradient(145deg, #3B82F6, #000)",
       url: "https://www.linkedin.com/in/saptarshi-borkataky-34a740231/",
     },
-      {
-      image: "/members/ezaz.jpeg",
-      title: "Ezaz Ahmed",
-      subtitle: "App Lead",
-      handle: "@ezaz",
-      borderColor: "#3B82F6",
-      gradient: "linear-gradient(145deg, #3B82F6, #000)",
-      url: "https://www.linkedin.com/in/ezeehere/",
-    },
+     
     {
       image: "/members/jyotishman.png",
       title: "Jyotishman Pathak",
@@ -33,15 +44,7 @@ export function Members() {
       gradient: "linear-gradient(145deg, #3B82F6, #000)",
       url: "https://www.linkedin.com/in/jyotishmanpathak/",
     },
-      {
-      image: "/members/kankan.jpeg",
-      title: "Kankan",
-      subtitle: "UI/UX Lead",
-      handle: "@kankan",
-      borderColor: "#3B82F6",
-      gradient: "linear-gradient(145deg, #3B82F6, #000)",
-      url: "https://github.com/sarahjohnson",
-    },
+     
    
     {
       image: "/members/ml.jpg",
@@ -70,6 +73,7 @@ export function Members() {
       gradient: "linear-gradient(180deg, #10B981, #000)",
       url: "https://www.instagram.com/ishazuwu_/",
     },
+    
     {
       image: "/members/event.jpg",
       title: "Abhishek Sharma",
@@ -86,6 +90,15 @@ export function Members() {
       handle: "@Chandreyi",
       borderColor: "#10B981",
       gradient: "linear-gradient(180deg, #10B981, #000)",
+      url: "#",
+    },
+     {
+      image: "/members/abhinav.jpeg",
+      title: "Abhinav Kaman",
+      subtitle: "Treasurer",
+      handle: "@Abhinav",
+      borderColor: "#3B82F6",
+      gradient: "linear-gradient(145deg, #3B82F6, #000)",
       url: "#",
     },
   ];

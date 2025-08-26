@@ -149,10 +149,10 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-6 py-3">
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-6 text-sm">
             <div className="flex items-center space-x-2">
-              <span>📧 contact@jistcodingclub.ac.in</span>
+              <span>JistCodingClub@gmail.com</span>
             </div>
             <div className="flex items-center space-x-2">
-              <span>jist jorhat</span>
+              <span>JIST Jorhat, Assam</span>
             </div>
             
           </div>
