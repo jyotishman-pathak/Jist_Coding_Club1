@@ -4,7 +4,7 @@ import { usePathname, redirect } from "next/navigation";
 import ProfileCard from "@/components/dashboard/profileCard";
 
 
-import RoadmapResources from "@/components/dashboard/RoadmapResources";
+
 
 import Hackathons from "@/components/dashboard/subDashboard/events/Hackathons";
 import Past from "@/components/dashboard/subDashboard/events/Past";
@@ -13,6 +13,8 @@ import Completed from "@/components/dashboard/subDashboard/projects/Completed";
 import { Members } from "@/components/landingPage/Members";
 import Leaderboard from "@/components/dashboard/subDashboard/community/Leaderboard";
 import Ongoing from "@/components/dashboard/subDashboard/projects/Ongoing";
+import BugFactory from "@/components/dashboard/subDashboard/bugFactory/page";
+import Roadmap from "@/components/dashboard/subDashboard/resources/Roadmaps";
 
 export default function ModePage() {
   const pathname = usePathname();
@@ -32,9 +34,9 @@ export default function ModePage() {
   if (pathname === "/dashboard/projects/completed") return <Completed />;
 
   // Resources
-  if (pathname === "/dashboard/resources/roadmap") return <RoadmapResources />;
-  if (pathname === "/dashboard/resources/tutorials") return <RoadmapResources />;
-  if (pathname === "/dashboard/resources/notes") return <RoadmapResources />;
+  if (pathname === "/dashboard/resources/roadmap") return <Roadmap />;
+  // if (pathname === "/dashboard/resources/tutorials") return <RoadmapResources />;
+  // if (pathname === "/dashboard/resources/notes") return <RoadmapResources />;
 
   // Community
   if (pathname === "/dashboard/community/members") return <Members />;
@@ -42,6 +44,7 @@ export default function ModePage() {
 
   // Profile
   if (pathname === "/dashboard/profile") return <ProfileCard />;
+   if (pathname === "/dashboard/bug-factory") return <BugFactory />;
 
   return <div>Coming soon...</div>;
 }
