@@ -53,7 +53,7 @@ const ProfileCard = () => {
 
         setAboutData(newAboutData);
         setExtraData(newExtraData);
-        setInitialAboutData(newAboutData); // Fixed: Correct function name
+        setInitialAboutData(newAboutData);
         setInitialExtraData(newExtraData);
         if (data.imageUrl) {
           setAvatarPreview(`${data.imageUrl}?t=${Date.now()}`);
@@ -167,25 +167,25 @@ const ProfileCard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex">
-      <aside className="w-80 border-r bg-muted/30 p-6 flex flex-col items-center">
+    <div className="min-h-screen bg-background flex flex-col md:flex-row">
+      <aside className="w-full md:w-80 border-b md:border-b-0 md:border-r bg-muted/30 p-4 md:p-6 flex flex-col items-center">
         {isLoading ? (
-          <div className="flex flex-col items-center space-y-4">
-            <Skeleton className="h-28 w-28 rounded-full" />
-            <Skeleton className="h-6 w-40" />
-            <Skeleton className="h-4 w-32" />
+          <div className="flex flex-col items-center space-y-4 w-full">
+            <Skeleton className="h-20 w-20 md:h-28 md:w-28 rounded-full" />
+            <Skeleton className="h-5 w-32 md:h-6 md:w-40" />
+            <Skeleton className="h-4 w-24 md:h-4 md:w-32" />
             <Skeleton className="h-10 w-full" />
           </div>
         ) : (
           <>
-            <Avatar className="h-28 w-28 mb-4 border-2 border-primary shadow-md">
+            <Avatar className="h-20 w-20 md:h-28 md:w-28 mb-4 border-2 border-primary shadow-md">
               <AvatarImage
                 src={avatarPreview || aboutData.imageUrl || "/placeholder.png"}
               />
               <AvatarFallback>{aboutData.name ? aboutData.name[0] : "U"}</AvatarFallback>
             </Avatar>
-            <h2 className="font-semibold text-lg">{aboutData.name || "User"}</h2>
-            <p className="text-sm text-muted-foreground">{aboutData.email}</p>
+            <h2 className="font-semibold text-base md:text-lg text-center">{aboutData.name || "User"}</h2>
+            <p className="text-xs md:text-sm text-muted-foreground text-center">{aboutData.email}</p>
             <div className="mt-4 w-full">
               <FileUpload onChange={handleFileUpload} />
             </div>
@@ -193,35 +193,35 @@ const ProfileCard = () => {
         )}
       </aside>
 
-      <main className="flex-1 p-10">
+      <main className="flex-1 p-4 md:p-10">
         <Card className="w-full shadow-sm border">
           <CardHeader>
-            <CardTitle>Account Settings</CardTitle>
+            <CardTitle className="text-lg md:text-xl">Account Settings</CardTitle>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="about" className="w-full">
-              <TabsList className="grid grid-cols-2 w-64 mb-6">
-                <TabsTrigger value="about">Profile</TabsTrigger>
-                <TabsTrigger value="additional">Social Links</TabsTrigger>
+              <TabsList className="grid grid-cols-2 w-full max-w-[16rem] mb-6">
+                <TabsTrigger value="about" className="text-xs md:text-sm">Profile</TabsTrigger>
+                <TabsTrigger value="additional" className="text-xs md:text-sm">Social Links</TabsTrigger>
               </TabsList>
 
               <TabsContent value="about">
                 {isLoading ? (
-                  <div className="space-y-6 max-w-md">
+                  <div className="space-y-6 w-full max-w-md mx-auto">
                     <div className="space-y-2">
-                      <Skeleton className="h-4 w-24" />
-                      <Skeleton className="h-10 w-full" />
+                      <Skeleton className="h-4 w-20 md:w-24" />
+                      <Skeleton className="h-9 md:h-10 w-full" />
                     </div>
                     <div className="space-y-2">
-                      <Skeleton className="h-4 w-24" />
-                      <Skeleton className="h-10 w-full" />
+                      <Skeleton className="h-4 w-20 md:w-24" />
+                      <Skeleton className="h-9 md:h-10 w-full" />
                     </div>
-                    <Skeleton className="h-10 w-32" />
+                    <Skeleton className="h-9 md:h-10 w-24 md:w-32" />
                   </div>
                 ) : (
-                  <form onSubmit={handleAboutSubmit} className="space-y-6 max-w-md">
+                  <form onSubmit={handleAboutSubmit} className="space-y-6 w-full max-w-md mx-auto">
                     <div className="space-y-2">
-                      <Label htmlFor="name">Name</Label>
+                      <Label htmlFor="name" className="text-xs md:text-sm">Name</Label>
                       <Input
                         id="name"
                         value={aboutData.name}
@@ -230,10 +230,11 @@ const ProfileCard = () => {
                         }
                         placeholder="Your full name"
                         disabled={isLoading}
+                        className="text-xs md:text-sm h-9 md:h-10"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="email">Email</Label>
+                      <Label htmlFor="email" className="text-xs md:text-sm">Email</Label>
                       <Input
                         id="email"
                         value={aboutData.email}
@@ -242,9 +243,14 @@ const ProfileCard = () => {
                         }
                         placeholder="you@example.com"
                         disabled={isLoading}
+                        className="text-xs md:text-sm h-9 md:h-10"
                       />
                     </div>
-                    <Button type="submit" disabled={isAboutUnchanged || isLoading}>
+                    <Button
+                      type="submit"
+                      disabled={isAboutUnchanged || isLoading}
+                      className="h-9 md:h-10 text-xs md:text-sm"
+                    >
                       Save Changes
                     </Button>
                   </form>
@@ -253,25 +259,25 @@ const ProfileCard = () => {
 
               <TabsContent value="additional">
                 {isLoading ? (
-                  <div className="space-y-6 max-w-md">
+                  <div className="space-y-6 w-full max-w-md mx-auto">
                     <div className="space-y-2">
-                      <Skeleton className="h-4 w-24" />
-                      <Skeleton className="h-10 w-full" />
+                      <Skeleton className="h-4 w-20 md:w-24" />
+                      <Skeleton className="h-9 md:h-10 w-full" />
                     </div>
                     <div className="space-y-2">
-                      <Skeleton className="h-4 w-24" />
-                      <Skeleton className="h-10 w-full" />
+                      <Skeleton className="h-4 w-20 md:w-24" />
+                      <Skeleton className="h-9 md:h-10 w-full" />
                     </div>
                     <div className="space-y-2">
-                      <Skeleton className="h-4 w-24" />
-                      <Skeleton className="h-10 w-full" />
+                      <Skeleton className="h-4 w-20 md:w-24" />
+                      <Skeleton className="h-9 md:h-10 w-full" />
                     </div>
-                    <Skeleton className="h-10 w-32" />
+                    <Skeleton className="h-9 md:h-10 w-24 md:w-32" />
                   </div>
                 ) : (
-                  <form onSubmit={handleExtraSubmit} className="space-y-6 max-w-md">
+                  <form onSubmit={handleExtraSubmit} className="space-y-6 w-full max-w-md mx-auto">
                     <div className="space-y-2">
-                      <Label htmlFor="githubUrl">GitHub</Label>
+                      <Label htmlFor="githubUrl" className="text-xs md:text-sm">GitHub</Label>
                       <Input
                         id="githubUrl"
                         value={extraData.githubUrl}
@@ -280,10 +286,11 @@ const ProfileCard = () => {
                         }
                         placeholder="https://github.com/username"
                         disabled={isLoading}
+                        className="text-xs md:text-sm h-9 md:h-10"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="linkedIn">LinkedIn</Label>
+                      <Label htmlFor="linkedIn" className="text-xs md:text-sm">LinkedIn</Label>
                       <Input
                         id="linkedIn"
                         value={extraData.linkedIn}
@@ -292,10 +299,11 @@ const ProfileCard = () => {
                         }
                         placeholder="https://linkedin.com/in/username"
                         disabled={isLoading}
+                        className="text-xs md:text-sm h-9 md:h-10"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="instagram">Instagram</Label>
+                      <Label htmlFor="instagram" className="text-xs md:text-sm">Instagram</Label>
                       <Input
                         id="instagram"
                         value={extraData.instagram}
@@ -304,9 +312,14 @@ const ProfileCard = () => {
                         }
                         placeholder="https://instagram.com/username"
                         disabled={isLoading}
+                        className="text-xs md:text-sm h-9 md:h-10"
                       />
                     </div>
-                    <Button type="submit" disabled={isExtraUnchanged || isLoading}>
+                    <Button
+                      type="submit"
+                      disabled={isExtraUnchanged || isLoading}
+                      className="h-9 md:h-10 text-xs md:text-sm"
+                    >
                       Update Links
                     </Button>
                   </form>
