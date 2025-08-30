@@ -110,7 +110,7 @@ export default function ForgotPasswordPage() {
       }
 
       toast.success("Password reset successfully");
-      window.location.href = "/login";
+      window.location.href = "/auth/login";
     } catch (error: any) {
       toast.error(error.message || "Something went wrong");
     } finally {
