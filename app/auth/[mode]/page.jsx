@@ -25,7 +25,8 @@ export default function AuthPage() {
   </div>
   <div className="flex flex-1 items-center justify-center">
     <div className="w-full max-w-xs">
-      {mode === "login" ? <LoginForm /> : <SignupForm />}
+      {mode === "login" ? <LoginForm /> : <SignupForm /> }
+      
     </div>
   </div>
 </div>

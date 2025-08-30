@@ -72,7 +72,20 @@ model User {
   leaderboard           Leaderboard?
   additionalInfo        AdditionalInfo?
   @@map("user")
+  PasswordReset PasswordReset[]
 }
+
+model PasswordReset {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  otp       String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
 
 enum Occuring {
   UPCOMMING
