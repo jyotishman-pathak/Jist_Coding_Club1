@@ -15,6 +15,7 @@ import Leaderboard from "@/components/dashboard/subDashboard/community/Leaderboa
 import Ongoing from "@/components/dashboard/subDashboard/projects/Ongoing";
 import BugFactory from "@/components/dashboard/subDashboard/bugFactory/page";
 import Roadmap from "@/components/dashboard/subDashboard/resources/Roadmaps";
+import ProjectShare from "@/components/dashboard/subDashboard/share-project/ProjectShare";
 
 export default function ModePage() {
   const pathname = usePathname();
@@ -41,9 +42,13 @@ export default function ModePage() {
   // Community
   if (pathname === "/dashboard/community/members") return <Members />;
   if (pathname === "/dashboard/community/leaderboard") return <Leaderboard />;
+ 
+// project share
+  if (pathname === "/dashboard/profile") return <ProfileCard />;
+
 
   // Profile
-  if (pathname === "/dashboard/profile") return <ProfileCard />;
+  if (pathname === "/dashboard/share-projects") return <ProjectShare/>;
    if (pathname === "/dashboard/bug-factory") return <BugFactory />;
 
   return <div>Coming soon...</div>;

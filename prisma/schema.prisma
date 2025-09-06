@@ -69,10 +69,16 @@ model User {
   Interest              String[]
   createdAt             DateTime      @default(now())
   updatedAt             DateTime      @updatedAt
+  
+  projects   ProjectShow[]
+  likes      Likes[]
+  comments   Comment[]
+  
   leaderboard           Leaderboard?
   additionalInfo        AdditionalInfo?
+  PasswordReset         PasswordReset[]
+
   @@map("user")
-  PasswordReset PasswordReset[]
 }
 
 model PasswordReset {
@@ -97,3 +103,47 @@ enum ProjectOccurence {
   ONGOING
   COMPLETED
 }
+
+
+  
+
+
+model ProjectShow {
+  id        String      @id @default(uuid())
+  userId    Int
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime    @default(now())
+  
+  content   String?    
+  images    String[]    
+
+  likes     Likes[]
+  comments  Comment[]
+}
+
+
+model Likes {
+  id        Int         @id @default(autoincrement())
+  userId    Int
+  projectId String
+
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project   ProjectShow @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime    @default(now())
+
+  @@unique([userId, projectId]) // prevent duplicate likes
+}
+
+model Comment {
+  id        Int         @id @default(autoincrement())
+  userId    Int
+  projectId String
+  content   String
+  createdAt DateTime    @default(now())
+
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project   ProjectShow @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+

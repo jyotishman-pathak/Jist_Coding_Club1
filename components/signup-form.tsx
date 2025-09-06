@@ -64,14 +64,15 @@ export function SignupForm({ className }: { className?: string }) {
       return;
     }
 
-    const payload = {
-      name,
-      email,
-      password,
-      Department: department,
-      ProgrammingExperience: Number(experience),
-      Interest: selectedInterests,
-    };
+  const payload = {
+  name,
+  email,
+  password,
+  department,             
+  programmingExperience: Number(experience), 
+  interest: selectedInterests,               
+};
+
 
     console.log("Sending payload:", JSON.stringify(payload, null, 2));
 

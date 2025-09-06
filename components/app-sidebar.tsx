@@ -14,6 +14,7 @@ import {
   Globe,
   Brain,
   Code2,
+  LucideDatabase,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -89,6 +90,14 @@ export const data = {
         { title: "Notes", url: "/dashboard/resources/notes" },
       ],
     },
+     {
+      title: "Share Projects",
+      url: "/dashboard/share-projects",
+      icon: LucideDatabase,
+      items: [],
+    },
+
+
     {
       title: "Community",
       url: "/dashboard/community",

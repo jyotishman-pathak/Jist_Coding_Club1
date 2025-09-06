@@ -1,32 +1,37 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { compare } from "bcryptjs"; 
-import prisma  from "@/lib/prisma";
+import { compare } from "bcryptjs";
+import prisma from "@/lib/prisma";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     CredentialsProvider({
+      name: "Credentials",
       credentials: {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      authorize: async (credentials) => {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error("Email and password are required");
+      async authorize(credentials) {
+        // ✅ Explicit type cast
+        const email = credentials?.email as string;
+        const password = credentials?.password as string;
+
+        if (!email || !password) {
+          throw new Error("Email and password required");
         }
 
-        // Find user by email
         const user = await prisma.user.findUnique({
-          where: { email: String(credentials.email) },
+          where: { email }, 
         });
-        if (!user) throw new Error("Invalid credentials.");
 
-        const isValid = await compare(
-          String(credentials.password),
-          String(user.password)
-        );
+        if (!user) {
+          throw new Error("Invalid email or password");
+        }
 
-        if (!isValid) throw new Error("Invalid credentials.");
+        const isValid = await compare(password, user.password); 
+        if (!isValid) {
+          throw new Error("Invalid email or password");
+        }
 
         return {
           id: String(user.id),
@@ -37,34 +42,28 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   secret: process.env.AUTH_SECRET,
-session: {
-    strategy: "jwt", // or "database" depending on your setup
+  session: {
+    strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   callbacks: {
-    async session({ session, token, user }) {
-      console.log("Session callback - token:", token, "user:", user);
-      if (token?.sub) {
-        session.user = session.user || {};
-        session.user.id = token.sub; // Ensure ID is included
-        session.user.email = token.email || session.user.email;
-        session.user.name = token.name || session.user.name;
-      } else if (user) {
-        session.user = session.user || {};
-        session.user.id = user.id.toString();
-        session.user.email = user.email;
-        session.user.name = user.name;
+    async session({ session, token }) {
+      if (token) {
+        session.user = {
+          id: token.sub as string,
+          name: token.name as string,
+          email: token.email as string,
+          emailVerified: null, // ✅ fix for AdapterUser type
+        };
       }
-      console.log("Session callback result:", session);
       return session;
     },
     async jwt({ token, user }) {
       if (user) {
         token.sub = user.id;
-        token.email = user.email;
         token.name = user.name;
+        token.email = user.email;
       }
-      console.log("JWT callback:", token);
       return token;
     },
   },
