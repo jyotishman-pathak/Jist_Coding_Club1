@@ -1,4 +1,4 @@
-// app/api/projects/route.ts
+// app/api/project-upload/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { put } from "@vercel/blob";

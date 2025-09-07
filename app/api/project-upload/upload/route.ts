@@ -1,4 +1,4 @@
-// pages/api/project/upload.ts
+// pages/api/project-upload/upload/route.ts
 import { NextResponse } from "next/server";
 import { put } from "@vercel/blob";
 import prisma from "@/lib/prisma";
@@ -6,7 +6,7 @@ import prisma from "@/lib/prisma";
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
-    const files = formData.getAll("files") as File[]; // 👈 multiple files
+    const files = formData.getAll("files") as File[]; 
     const userId = formData.get("userId") as string | null;
     const content = formData.get("content") as string | null;
 

@@ -68,6 +68,7 @@ interface Post {
 }
 
 export default function ProjectShare() {
+  const { data: session, status } = useSession();
   const [postContent, setPostContent] = useState("");
   const [images, setImages] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
@@ -78,6 +79,9 @@ export default function ProjectShare() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { theme, setTheme } = useTheme();
+
+  // Get current user ID from session
+  const currentUserId = session?.user?.id ? parseInt(session.user.id) : null;
 
   // Fetch posts
   useEffect(() => {
@@ -97,14 +101,16 @@ export default function ProjectShare() {
   }, []);
 
   // Like toggle
-  const handleLike = async (projectId: string, userId: number) => {
+  const handleLike = async (projectId: string) => {
+    if (!currentUserId) return;
+    
     try {
       const res = await fetch("/api/likes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ projectId, userId }),
+        body: JSON.stringify({ projectId, userId: currentUserId }),
       });
 
       if (!res.ok) throw new Error("Failed to like post");
@@ -115,12 +121,12 @@ export default function ProjectShare() {
           p.id === projectId
             ? {
                 ...p,
-                likesCount: p.likes && p.likes.some((like) => like.userId === userId)
+                likesCount: p.likes && p.likes.some((like) => like.userId === currentUserId)
                   ? p.likesCount - 1
                   : p.likesCount + 1,
-                likes: p.likes && p.likes.some((like) => like.userId === userId)
-                  ? p.likes.filter((like) => like.userId !== userId)
-                  : [...(p.likes || []), { id: Date.now().toString(), userId, projectId }],
+                likes: p.likes && p.likes.some((like) => like.userId === currentUserId)
+                  ? p.likes.filter((like) => like.userId !== currentUserId)
+                  : [...(p.likes || []), { id: Date.now().toString(), userId: currentUserId, projectId }],
               }
             : p
         )
@@ -131,14 +137,16 @@ export default function ProjectShare() {
   };
 
   // Add comment
-  const handleAddComment = async (projectId: string, userId: number, content: string) => {
+  const handleAddComment = async (projectId: string, content: string) => {
+    if (!currentUserId) return;
+    
     try {
       const res = await fetch("/api/comments", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ projectId, userId, content }),
+        body: JSON.stringify({ projectId, userId: currentUserId, content }),
       });
 
       if (!res.ok) throw new Error("Failed to add comment");
@@ -183,13 +191,17 @@ export default function ProjectShare() {
 
   const handlePostSubmit = async () => {
     if (!postContent && images.length === 0) return;
+    if (!currentUserId) {
+      alert("You need to be logged in to post");
+      return;
+    }
     
     setPosting(true);
 
     try {
       const formData = new FormData();
       formData.append("content", postContent);
-      formData.append("userId", "1");
+      formData.append("userId", currentUserId.toString());
       images.forEach((img) => formData.append("images", img));
 
       const res = await fetch("/api/project-upload", {
@@ -221,7 +233,6 @@ export default function ProjectShare() {
     }
   }, [postContent]);
 
-  const session = useSession()
   return (
     <div className="min-h-screen flex flex-col transition-colors duration-300 bg-white text-black dark:bg-black dark:text-white">
       {/* Header */}
@@ -229,17 +240,23 @@ export default function ProjectShare() {
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <h1 className="text-xl font-bold">ProjectShare</h1>
           <div className="flex items-center gap-4">
-            
-          <Avatar className="h-8 w-8">
-  {session.data?.user?.image ? (
-    <AvatarImage src={session.data.user.image} />
-  ) : (
-    <AvatarFallback>
-      {session.data?.user?.name?.charAt(0) || "U"}
-    </AvatarFallback>
-  )}
-</Avatar>
-
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="rounded-full"
+            >
+              {theme === "dark" ? "Light Mode" : "Dark Mode"}
+            </Button>
+            <Avatar className="h-8 w-8">
+              {session?.user?.image ? (
+                <AvatarImage src={session.user.image} />
+              ) : (
+                <AvatarFallback>
+                  {session?.user?.name?.charAt(0) || "U"}
+                </AvatarFallback>
+              )}
+            </Avatar>
           </div>
         </div>
       </header>
@@ -254,15 +271,15 @@ export default function ProjectShare() {
                 className="flex items-center gap-3 p-4 cursor-text"
                 onClick={handleTextareaFocus}
               >
-               <Avatar className="h-8 w-8">
-  {session.data?.user?.image ? (
-    <AvatarImage src={session.data.user.image} />
-  ) : (
-    <AvatarFallback>
-      {session.data?.user?.name?.charAt(0) || "U"}
-    </AvatarFallback>
-  )}
-</Avatar>
+                <Avatar className="h-10 w-10">
+                  {session?.user?.image ? (
+                    <AvatarImage src={session.user.image} />
+                  ) : (
+                    <AvatarFallback>
+                      {session?.user?.name?.charAt(0) || "U"}
+                    </AvatarFallback>
+                  )}
+                </Avatar>
                 <div className="flex-1 text-gray-500 dark:text-gray-400">
                   Share your project updates...
                 </div>
@@ -346,12 +363,12 @@ export default function ProjectShare() {
                     variant="ghost"
                     size="sm"
                     className="flex items-center gap-1"
-                    onClick={() => handleLike(post.id, 1)}
+                    onClick={() => handleLike(post.id)}
                   >
                     <Heart
                       className="h-4 w-4"
                       fill={
-                        post.likes && post.likes.some((like) => like.userId === 1) ? "currentColor" : "none"
+                        post.likes && post.likes.some((like) => like.userId === currentUserId) ? "currentColor" : "none"
                       }
                     />{" "}
                     {post.likesCount || 0}
@@ -376,7 +393,7 @@ export default function ProjectShare() {
                       placeholder="Write a comment..."
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
-                          handleAddComment(post.id, 1, (e.target as HTMLInputElement).value);
+                          handleAddComment(post.id, (e.target as HTMLInputElement).value);
                           (e.target as HTMLInputElement).value = "";
                         }
                       }}
@@ -388,7 +405,7 @@ export default function ProjectShare() {
                           `#comment-${post.id}`
                         );
                         if (input && input.value.trim()) {
-                          handleAddComment(post.id, 1, input.value);
+                          handleAddComment(post.id, input.value);
                           input.value = "";
                         }
                       }}
@@ -447,8 +464,13 @@ export default function ProjectShare() {
           <div className="space-y-4">
             <div className="flex items-start gap-3">
               <Avatar className="h-10 w-10">
-                <AvatarImage src="/placeholder-user.jpg" />
-                <AvatarFallback>U</AvatarFallback>
+                {session?.user?.image ? (
+                  <AvatarImage src={session.user.image} />
+                ) : (
+                  <AvatarFallback>
+                    {session?.user?.name?.charAt(0) || "U"}
+                  </AvatarFallback>
+                )}
               </Avatar>
               <Textarea
                 ref={textareaRef}
@@ -512,7 +534,7 @@ export default function ProjectShare() {
               <Button
                 size="sm"
                 onClick={handlePostSubmit}
-                disabled={(!postContent && images.length === 0) || posting}
+                disabled={(!postContent && images.length === 0) || posting || !currentUserId}
                 className="rounded-full bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
               >
                 {posting ? (
