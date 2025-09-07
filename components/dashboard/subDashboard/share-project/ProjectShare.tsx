@@ -234,7 +234,7 @@ export default function ProjectShare() {
   }, [postContent]);
 
   return (
-    <div className="min-h-screen flex flex-col transition-colors duration-300 bg-white text-black dark:bg-black dark:text-white">
+    <div className="min-h-screen flex flex-col transition-colors duration-300 bg-white text-black dark:bg-neutral-950 dark:text-white">
       {/* Header */}
       <header className="sticky top-0 z-10 bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800 p-4 shadow-sm">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
